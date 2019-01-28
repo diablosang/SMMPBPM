@@ -1,5 +1,5 @@
-﻿<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.smmp.bpm" version="1.0.0" versionCode="">
-  <name>SMMPBPM</name>
+﻿<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.smmp.bpm" version="1.0.1" versionCode="">
+  <name>BPM</name>
   <description>SMMP BPM</description>
   <author email="ITservice@smmpwt.com.cn" href="http://http://www.smmpwt.com.cn/">ITservice</author>
   <preference name="phonegap-version" value="cli-8.0.0" />
