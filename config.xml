@@ -1,0 +1,76 @@
+﻿<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.smmp.bpm" version="1.0.0" versionCode="">
+  <name>SMMPBPM</name>
+  <description>SMMP BPM</description>
+  <author email="ITservice@smmpwt.com.cn" href="http://http://www.smmpwt.com.cn/">ITservice</author>
+  <preference name="phonegap-version" value="cli-8.0.0" />
+  <preference name="permissions" value="none" />
+  <preference name="SplashScreen" value="splash" />
+  <preference name="SplashScreenDelay" value="60000" />
+  <preference name="AutoHideSplashScreen" value="false" />
+  
+  <preference name="orientation" value="portrait" />
+  <preference name="DisallowOverscroll" value="true" />
+  <preference name="StatusBarOverlaysWebView" value="true" />
+  <preference name="StatusBarBackgroundColor" value="#00243E" />
+
+  <access origin="*" />
+  <!--<plugin spec="http://github.com/don/cordova-filechooser.git" source="git" />-->
+  <plugin name="cordova-plugin-whitelist" />
+  <plugin name="cordova-plugin-splashscreen" onload="true" version="3.2.2"/>
+  <plugin name="cordova-plugin-ios-longpress-fix" />
+  <plugin name="cordova-plugin-statusbar" onload="true" />
+  <plugin name="cordova-plugin-camera" spec="~4.0.3" />
+  <plugin name="phonegap-plugin-barcodescanner" />  
+  <plugin name="jpush-phonegap-plugin">
+    <param name="APP_KEY" value="d1f576559f7868f2a0dd68af" />
+  </plugin>
+  <plugin name="cordova-plugin-app-version" />
+
+  <icon src="res/icon/icon.png" />
+  <platform name="ios">
+     <icon src="res/icon/ios/icon-1024.png" platform="ios" width="1024" height="1024" />
+    <!-- iPhone 6 / 6+ -->
+    <icon src="res/icon/ios/icon-60@3x.png" platform="ios" width="180" height="180" />
+
+    <!-- iPhone / iPod Touch  -->
+    <icon src="res/icon/ios/icon-60.png" platform="ios" width="60" height="60" />
+    <icon src="res/icon/ios/icon-60@2x.png" platform="ios" width="120" height="120" />
+
+    <!-- iPad -->
+    <icon src="res/icon/ios/icon-76.png" platform="ios" width="76" height="76" />
+    <icon src="res/icon/ios/icon-76@2x.png" platform="ios" width="152" height="152" />
+    <icon src="res/icon/ios/icon-83.5@2x.png" platform="ios" width="167" height="167" />
+
+    <!-- Settings Icon -->
+    <icon src="res/icon/ios/icon-small.png" platform="ios" width="29" height="29" />
+    <icon src="res/icon/ios/icon-small@2x.png" platform="ios" width="58" height="58" />
+    <icon src="res/icon/ios/icon-small@3x.png" platform="ios" width="87" height="87" />
+
+    <!-- Spotlight Icon -->
+    <icon src="res/icon/ios/icon-40.png" platform="ios" width="40" height="40" />
+    <icon src="res/icon/ios/icon-40@2x.png" platform="ios" width="80" height="80" />
+    <icon src="res/icon/ios/icon-40@3x.png" platform="ios" width="120" height="120" />
+    
+    <preference name="prerendered-icon" value="false" />
+    <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
+      <string>APP将通过摄像头扫描二维码，以及让用户拍摄照片上传</string>
+    </edit-config>
+    <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
+      <string>APP将让用户选择照片上传系统</string>
+    </edit-config>
+    <edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
+      <string>APP将获取用户的当前地理位置</string>
+    </edit-config>
+    <edit-config target="CFBundleIdentifier" file="*-Info.plist" mode="merge">
+      <string>com.smmp.bpm</string>
+    </edit-config>
+  </platform>
+  <platform name="android">
+    <icon src="res/icon/android/ldpi.png" platform="android" qualifier="ldpi" />
+    <icon src="res/icon/android/mdpi.png" platform="android" qualifier="mdpi" />
+    <icon src="res/icon/android/hdpi.png" platform="android" qualifier="hdpi" />
+    <icon src="res/icon/android/xhdpi.png" platform="android" qualifier="xhdpi" />
+    <icon src="res/icon/android/xxhdpi.png" platform="android" qualifier="xxhdpi" />
+    <preference name="android-windowSoftInputMode" value="adjustResize" />
+  </platform>
+</widget>
