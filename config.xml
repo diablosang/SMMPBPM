@@ -62,7 +62,7 @@
       <string>APP将获取用户的当前地理位置</string>
     </edit-config>
     <edit-config target="CFBundleIdentifier" file="*-Info.plist" mode="merge">
-      <string>com.smmp.bpm</string>
+      <string>com.smmp.client</string>
     </edit-config>
   </platform>
   <platform name="android">
