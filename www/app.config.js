@@ -1,4 +1,4 @@
-var appVer = "1.0.2";
+var appVer = "1.0.3";
 
 window.Mobile = $.extend(true, window.Mobile, {
   "config": {
