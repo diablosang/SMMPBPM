@@ -3,8 +3,6 @@
     var viewModel = {
         hideLayout: true,
         title: ko.observable(""),
-        chn: ko.observable(""),
-        deviceid: ko.observable(""),
         versionChecked: ko.observable(false),
         indicatorVisible: ko.observable(false),
         viewShown: function () {
@@ -41,17 +39,6 @@
 
                 viewModel.versionChecked(true);
             }
-
-            var sessionStorage = window.sessionStorage;
-            if (sessionStorage.baiduchn != null) {
-                this.chn(sessionStorage.baiduchn);
-            }
-
-            if (sessionStorage.uuid != null) {
-                this.deviceid(sessionStorage.uuid);
-            }
-
-
         },
         username: ko.observable(""),
         password: ko.observable(""),
@@ -71,18 +58,14 @@
         serverVer = CheckServerVersion();
         viewModel.indicatorVisible(true);
         var sessionStorage = window.sessionStorage;
-        if (sessionStorage.baiduchn != null) {
-            viewModel.chn(sessionStorage.baiduchn);
-        }
-
         var devicetype = DevExpress.devices.real().platform;
 
         if (serverVer >= 2) {
             var postData = {
                 UserName: u,
                 Password: p,
-                CHN: viewModel.chn(),
-                DeviceID: viewModel.deviceid(),
+                CHN: pushChn,
+                DeviceID: deviceid,
                 DeviceType: devicetype,
                 Lang: DeviceLang()
             };

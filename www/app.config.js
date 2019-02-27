@@ -1,6 +1,8 @@
-﻿var appVer = "1.1.10";
+﻿var appVer = "1.1.11";
 var nullDeviceType = "PC";
 var asUserList = [];
+var pushChn = "";
+var deviceid = "";
 
 window.Mobile = $.extend(true, window.Mobile, {
   "config": {

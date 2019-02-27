@@ -23,9 +23,7 @@ $(function () {
         });
 
         var uuid = device.uuid;
-        var sessionStorage = window.sessionStorage;
-        sessionStorage.removeItem("uuid");
-        sessionStorage.setItem("uuid", uuid);
+        deviceid = uuid;
 
         window.JPush.init();
         window.JPush.getRegistrationID(function (rid) {
@@ -33,10 +31,7 @@ $(function () {
                 if (rid==null || rid=="") {
                     var t1 = window.setTimeout(window.JPush.getRegistrationID, 1000);
                 }
-                var chn = rid;
-                var sessionStorage = window.sessionStorage;
-                sessionStorage.removeItem("pushchn");
-                sessionStorage.setItem("pushchn", chn);
+                pushChn = rid;
             }
             catch (e) {
                 DevExpress.ui.notify(e, "error", 3000);
