@@ -334,7 +334,7 @@ function OpenFile(fileID) {
         cache: false,
         success: function (data, textStatus) {
             var furl = $("#WebApiServerURL")[0].value + "/Asapment/Temp/" + data.file;
-            window.open(furl);
+            window.open(furl, '_system', 'location=yes');
         },
         error: function (xmlHttpRequest, textStatus, errorThrown) {
             ServerError(xmlHttpRequest.responseText);

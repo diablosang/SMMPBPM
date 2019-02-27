@@ -188,7 +188,7 @@
                             var apkURL = "";
                             if (currentplatform == 'android') {
                                 apkURL = $("#WebApiServerURL")[0].value + "/App/Mobile.apk";
-                                window.open(apkURL, '_blank', 'location=yes');
+                                window.open(apkURL, '_system', 'location=yes');
                             }
                             else if (currentplatform == 'ios') {
                                 return;
