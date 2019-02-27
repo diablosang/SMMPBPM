@@ -1,4 +1,4 @@
-﻿<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.smmp.client" version="1.1.3" versionCode="">
+﻿<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.smmp.client" version="1.1.4" versionCode="">
   <name>BPM</name>
   <description>SMMP BPM</description>
   <author email="ITservice@smmpwt.com.cn" href="http://http://www.smmpwt.com.cn/">ITservice</author>
@@ -25,7 +25,8 @@
     <param name="APP_KEY" value="d1f576559f7868f2a0dd68af" />
   </plugin>
   <plugin name="cordova-plugin-app-version" />
-
+  <plugin name="cordova-plugin-inappbrowser" spec="~3.0.0" />
+  
   <icon src="res/icon/icon.png" />
   <platform name="ios">
      <icon src="res/icon/ios/icon-1024.png" platform="ios" width="1024" height="1024" />

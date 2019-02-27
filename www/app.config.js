@@ -1,5 +1,5 @@
-﻿var appVer = "1.1.2";
-var nullDeviceType = "phone";
+﻿var appVer = "1.1.4";
+var nullDeviceType = "PC";
 var asUserList = [];
 
 window.Mobile = $.extend(true, window.Mobile, {

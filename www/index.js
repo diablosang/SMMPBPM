@@ -27,6 +27,10 @@ $(function () {
         sessionStorage.removeItem("uuid");
         sessionStorage.setItem("uuid", uuid);
 
+        try {
+            window.open = cordova.InAppBrowser.open;
+        }
+        catch (e) { }
     });
 
     function onNavigatingBack(e) {
