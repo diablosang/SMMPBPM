@@ -47,6 +47,8 @@
             items: [],
             onItemClick: function (e) {
                 if (e.itemData.needComment == "1") {
+                    var popComment = $("#popComment").dxPopup("instance");
+                    popComment.show();
                     this.commentVisible(true);
                     this.comment(e.itemData.options.text);
                     this.commentButton(e.itemData.name);
@@ -109,8 +111,12 @@
         popCommentOption: {
             title: SysMsg.wfCOMMENT,
             showTitle: true,
-            visible: this.commentVisible,
-            height: 250
+            visible: false,
+            height: 250,
+            onShown: function (e) {
+                var txtComment = $("#txtComment").dxTextArea("instance");
+                txtComment.option("value", viewModel.comment());
+            }
         },
         popWFHistOption: {
             title: SysMsg.wfhist,
@@ -121,7 +127,8 @@
             }
         },
         onCommentClick: function (e) {
-            this.commentVisible(false);
+            var popComment = $("#popComment").dxPopup("instance");
+            popComment.hide();
             ButtonClick(viewModel, "BMAINBLOCK", this.commentButton(), this.comment(), params);
         }
         //  Put the binding properties here

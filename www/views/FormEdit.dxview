@@ -6,12 +6,12 @@
     <div data-bind="dxScrollView: {useNative: false }" class="ItemList-ScrollView4">
       <div id="divBlock"></div>
     </div>
-    <div data-bind="dxPopup: popCommentOption">
+    <div id="popComment" data-bind="dxPopup: popCommentOption">
       <div>
         <table width="100%">
           <tr>
             <td width="100%">
-              <div data-bind="dxTextArea: {text:comment,height:90}">
+              <div id="txtComment" data-bind="dxTextArea: {text:comment,height:90}">
               </div>
             </td>
           </tr>
