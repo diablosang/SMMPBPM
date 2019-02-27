@@ -455,6 +455,9 @@
 
         for (var b = 0; b < block.button.length; b++) {
             var button = block.button[b];
+            if (button.BTNID == "BTNSYSWFZB") {
+                continue;
+            }
             var baritem = { location: 'before', widget: 'button', name: button.BTNID, needComment: button.NEEDCOMMENT, options: { text: button.DES }, EXTPROP: button.EXTPROP };
             baritems.push(baritem);
         }
