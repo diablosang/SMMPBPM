@@ -26,18 +26,7 @@ $(function () {
         deviceid = uuid;
 
         window.JPush.init();
-        window.JPush.getRegistrationID(function (rid) {
-            try {
-                if (rid==null || rid=="") {
-                    var t1 = window.setTimeout(window.JPush.getRegistrationID, 1000);
-                }
-                pushChn = rid;
-                DevExpress.ui.notify(rid, "error", 3000);
-            }
-            catch (e) {
-                DevExpress.ui.notify(e, "error", 3000);
-            }
-        });
+        window.setTimeout(GetRegistrationID, 1000);
 
         if (device.platform != "Android") {
             window.JPush.setApplicationIconBadgeNumber(0);
@@ -48,6 +37,21 @@ $(function () {
         }
         catch (e) { }
     });
+
+    function GetRegistrationID() {
+        window.JPush.getRegistrationID(function (rid) {
+            try {
+                if (rid == null || rid == "") {
+                    var t1 = window.setTimeout(GetRegistrationID, 1000);
+                    return;
+                }
+                pushChn = rid;
+            }
+            catch (e) {
+                DevExpress.ui.notify(e, "error", 3000);
+            }
+        });
+    }
 
     function onNavigatingBack(e) {
         if (e.isHardwareButton && !Mobile.app.canBack()) {
