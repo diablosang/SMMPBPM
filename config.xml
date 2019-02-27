@@ -1,4 +1,4 @@
-﻿<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.smmp.client" version="1.1.4" versionCode="">
+﻿<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.smmp.client" version="1.1.5" versionCode="">
   <name>BPM</name>
   <description>SMMP BPM</description>
   <author email="ITservice@smmpwt.com.cn" href="http://http://www.smmpwt.com.cn/">ITservice</author>
@@ -65,6 +65,7 @@
     <edit-config target="CFBundleIdentifier" file="*-Info.plist" mode="merge">
       <string>com.smmp.client</string>
     </edit-config>
+    <plugin name="InAppBrowser" value="CDVInAppBrowser" />
   </platform>
   <platform name="android">
     <icon src="res/icon/android/ldpi.png" platform="android" qualifier="ldpi" />
@@ -73,6 +74,7 @@
     <icon src="res/icon/android/xhdpi.png" platform="android" qualifier="xhdpi" />
     <icon src="res/icon/android/xxhdpi.png" platform="android" qualifier="xxhdpi" />
     <preference name="android-windowSoftInputMode" value="adjustResize" />
+    <plugin name="InAppBrowser" value="org.apache.cordova.InAppBrowser" />
   </platform>
 
   <allow-navigation href="*" />
