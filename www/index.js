@@ -33,7 +33,7 @@ $(function () {
                 if (rid==null || rid=="") {
                     var t1 = window.setTimeout(window.JPush.getRegistrationID, 1000);
                 }
-                var chn = data;
+                var chn = rid;
                 var sessionStorage = window.sessionStorage;
                 sessionStorage.removeItem("pushchn");
                 sessionStorage.setItem("pushchn", chn);
