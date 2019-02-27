@@ -26,6 +26,7 @@ $(function () {
         deviceid = uuid;
 
         window.JPush.init();
+        window.JPush.resumePush();
         window.setTimeout(GetRegistrationID, 1000);
 
         if (device.platform != "Android") {
