@@ -137,33 +137,29 @@
             DevExpress.ui.notify(e.message, "error", 1000);
         }
 
-        if (serverVer >= 3) {
-            var url2 = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetGalleryData?UserName=" + u;
-            $.ajax({
-                type: 'GET',
-                url: url2,
-                cache: false,
-                success: function (data, textStatus) {
-                    var serverUrl = $("#WebApiServerURL")[0].value;
-                    var ds = [];
-                    for (var i = 0; i < data.length; i++) {
-                        var imgurl = serverUrl + "/" + data[i].imgurl;
-                        var img = { imageSrc: imgurl }
-                        ds.push(img);
-                    }
-                    //ds.push(imgurl + "/images/g1.jpg");
-                    //ds.push(imgurl + "/images/g2.jpg");
-                    //ds.push(imgurl + "/images/g3.jpg");
-                    //ds.push(imgurl + "/images/g4.jpg");
-                    var galDash = $("#galDash").dxGallery("instance");
-                    galDash.option("dataSource", ds);
-                    galDash.option("animationEnabled", true);
-                },
-                error: function (xmlHttpRequest, textStatus, errorThrown) {
+        //if (serverVer >= 3) {
+        //    var url2 = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetGalleryData?UserName=" + u;
+        //    $.ajax({
+        //        type: 'GET',
+        //        url: url2,
+        //        cache: false,
+        //        success: function (data, textStatus) {
+        //            var serverUrl = $("#WebApiServerURL")[0].value;
+        //            var ds = [];
+        //            for (var i = 0; i < data.length; i++) {
+        //                var imgurl = serverUrl + "/" + data[i].imgurl;
+        //                var img = { imageSrc: imgurl }
+        //                ds.push(img);
+        //            }
+        //            var galDash = $("#galDash").dxGallery("instance");
+        //            galDash.option("dataSource", ds);
+        //            galDash.option("animationEnabled", true);
+        //        },
+        //        error: function (xmlHttpRequest, textStatus, errorThrown) {
 
-                }
-            });
-        }
+        //        }
+        //    });
+        //}
     };
 
     function OpenDoc(func, group, doc) {

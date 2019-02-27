@@ -1,4 +1,4 @@
-﻿var appVer = "1.1.1";
+﻿var appVer = "1.1.2";
 var nullDeviceType = "phone";
 var asUserList = [];
 

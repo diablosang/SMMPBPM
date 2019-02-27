@@ -165,8 +165,7 @@
     }
 
     function CheckUpdate() {
-        var ver = $("#appver").text();
-        ver = ver.replace("Version:", "");
+        var ver = appVer;
         var url = $("#WebApiServerURL")[0].value + "/Api/Debug/CheckAppVersion2?ver=" + ver;
         var currentplatform = DevExpress.devices.real().platform;
 
@@ -192,8 +191,9 @@
                                 window.open(apkURL, '_blank', 'location=yes');
                             }
                             else if (currentplatform == 'ios') {
-                                apkURL = "https://itunes.apple.com/us/app/%E4%BC%81%E8%8D%AB%E5%AE%A2%E6%88%B7%E7%AB%AF/id1216043513?mt=8";
-                                window.open(apkURL, '_blank', 'location=yes');
+                                return;
+                                //apkURL = "https://itunes.apple.com/us/app/%E4%BC%81%E8%8D%AB%E5%AE%A2%E6%88%B7%E7%AB%AF/id1216043513?mt=8";
+                                //window.open(apkURL, '_blank', 'location=yes');
                             }
                             return;
                         }
