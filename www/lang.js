@@ -1,5 +1,5 @@
 ﻿var DeviceLang = function () {
-    return "ENG";
+    //return "ENG";
 
     if (navigator.language.indexOf("CN") >= 0 || navigator.language.indexOf("zh") >= 0) {
         return "CHS";
