@@ -1,4 +1,4 @@
-﻿<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.smmp.client" version="1.1.14" versionCode="">
+﻿<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.smmp.client" version="1.1.15" versionCode="">
   <name>BPM</name>
   <description>SMMP BPM</description>
   <author email="ITservice@smmpwt.com.cn" href="http://http://www.smmpwt.com.cn/">ITservice</author>
@@ -22,7 +22,7 @@
   <plugin name="cordova-plugin-camera" spec="~4.0.3" />
   <plugin name="phonegap-plugin-barcodescanner" />  
   <plugin name="jpush-phonegap-plugin">
-    <param name="APP_KEY" value="d1f576559f7868f2a0dd68af" />
+    <param name="APP_KEY" value="7e99acf0597033d0d2407f8a" />
   </plugin>
   <plugin name="cordova-plugin-app-version" />
   <plugin name="cordova-plugin-inappbrowser" spec="~3.0.0" />
