@@ -65,7 +65,7 @@
     <edit-config target="CFBundleIdentifier" file="*-Info.plist" mode="merge">
       <string>com.smmp.client</string>
     </edit-config>
-    <plugin name="InAppBrowser" value="CDVInAppBrowser" />
+    <!--<plugin name="InAppBrowser" value="CDVInAppBrowser" />-->
   </platform>
   <platform name="android">
     <icon src="res/icon/android/ldpi.png" platform="android" qualifier="ldpi" />
@@ -74,7 +74,7 @@
     <icon src="res/icon/android/xhdpi.png" platform="android" qualifier="xhdpi" />
     <icon src="res/icon/android/xxhdpi.png" platform="android" qualifier="xxhdpi" />
     <preference name="android-windowSoftInputMode" value="adjustResize" />
-    <plugin name="InAppBrowser" value="org.apache.cordova.InAppBrowser" />
+    <!--<plugin name="InAppBrowser" value="org.apache.cordova.InAppBrowser" />-->
   </platform>
 
   <allow-navigation href="*" />
