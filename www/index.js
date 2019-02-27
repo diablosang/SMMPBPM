@@ -32,6 +32,7 @@ $(function () {
                     var t1 = window.setTimeout(window.JPush.getRegistrationID, 1000);
                 }
                 pushChn = rid;
+                DevExpress.ui.notify(rid, "error", 3000);
             }
             catch (e) {
                 DevExpress.ui.notify(e, "error", 3000);
