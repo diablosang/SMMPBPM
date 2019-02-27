@@ -1,4 +1,4 @@
-﻿var appVer = "1.1.8";
+﻿var appVer = "1.1.9";
 var nullDeviceType = "PC";
 var asUserList = [];
 

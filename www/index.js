@@ -27,6 +27,30 @@ $(function () {
         sessionStorage.removeItem("uuid");
         sessionStorage.setItem("uuid", uuid);
 
+        window.JPush.init();
+        window.JPush.getRegistrationID(function (rid) {
+            try {
+                if (rid==null || rid=="") {
+                    var t1 = window.setTimeout(window.JPush.getRegistrationID, 1000);
+                }
+                var chn = data;
+                var sessionStorage = window.sessionStorage;
+                sessionStorage.removeItem("pushchn");
+                sessionStorage.setItem("pushchn", chn);
+            }
+            catch (e) {
+                DevExpress.ui.notify(e, "error", 3000);
+            }
+        });
+
+        if (device.platform != "Android") {
+            window.JPush.setApplicationIconBadgeNumber(0);
+        }
+
+        try {
+            window.open = cordova.InAppBrowser.open;
+        }
+        catch (e) { }
     });
 
     function onNavigatingBack(e) {
