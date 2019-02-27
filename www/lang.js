@@ -1,5 +1,5 @@
 ﻿var DeviceLang = function () {
-    //return "ENG";
+    return "ENG";
 
     if (navigator.language.indexOf("CN") >= 0 || navigator.language.indexOf("zh") >= 0) {
         return "CHS";
@@ -18,6 +18,7 @@ var chsMsg = {
     saveFailed: "保存失败",
     info: "提示",
     newVer: "当前应用存在新版本，是否要立刻下载？",
+    ok:"确定",
     yes: "是",
     no: "否",
     scanFailed: "扫描失败：",
@@ -25,13 +26,21 @@ var chsMsg = {
     rootFolder: "根目录",
     delSuccess: "删除成功",
     todo: "待办事项",
-    notice: "通知",
+    notice: "系统通知",
     selectgroup: "选择场景",
     changepwd: "修改密码",
     pwdnomatch: "两次输入的密码不一致",
     pwdchanged: "密码已修改",
     myrole: "我的角色",
-    roleid:"角色代码"
+    roleid: "角色代码",
+    wfhist: "工作流历史",
+    wfCREUSR: "审批人",
+    wfCREDAT: "审批日期",
+    wfGRPID: "场景",
+    wfBTNID: "动作",
+    wfCOMMENT: "意见",
+    logoff: "注销",
+    dialogRecall:"您确定要召回吗?"
 }
 var engMsg = {
     des:"Description",
@@ -39,6 +48,7 @@ var engMsg = {
     saveFailed: "Save failed",
     info: "Info",
     newVer: "These exists new version of this APP, do you want to download it now?",
+    ok: "OK",
     yes: "Yes",
     no: "No",
     scanFailed: "Scan failed: ",
@@ -52,7 +62,15 @@ var engMsg = {
     pwdnomatch: "Inconsistent passwords",
     pwdchanged: "Password Changed",
     myrole: "My Roles",
-    roleid: "Role"
+    roleid: "Role",
+    wfhist: "Workflow History",
+    wfCREUSR: "Step User",
+    wfCREDAT: "Step Date",
+    wfGRPID: "Stage",
+    wfBTNID: "Action",
+    wfCOMMENT: "Comment",
+    logoff: "Log Off",
+    dialogRecall: "Are you sure you want to recall?"
 }
 
 

@@ -5,10 +5,8 @@ var asapmentMenuData;
 
 $(function () {
     var startView = "Login"; 
-    var start = GetQueryVariable("start");
-    if (start != null) {
-        startView = start;
-    }
+    var start = ""; //"NBIDEBUG";
+    
 
     DevExpress.devices.current({ platform: "generic" });
 
@@ -94,7 +92,20 @@ $(function () {
             }
         }
     });
-    Mobile.app.navigate();
+
+    //Mobile.app.navigate();
+    if (start == "NBI") {
+        var func = GetQueryVariable("func");
+        var group = GetQueryVariable("group");
+        var view = "NBI?func=" + func + "&group=" + group;
+        Mobile.app.navigate(view, { root: true });
+    }
+    else if (start == "NBIDEBUG") {
+        Mobile.app.navigate("NBI?func=MFG_RPT_BI1&group=GADMIN", { root: true });
+    }
+    else {
+        Mobile.app.navigate();
+    }
 
 });
 

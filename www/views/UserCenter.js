@@ -4,6 +4,7 @@
     var viewModel = {
         viewShown: function (e) {
             $("#appver").text(appVer);
+            SetLanguage();
         },
         onLogoffClick: function () {
             var sessionStorage = window.sessionStorage;
@@ -51,6 +52,17 @@
             }
         }
     };
+
+    function SetLanguage() {
+        if (DeviceLang() != "CHS") {
+            $("#spanChangePwd").text("Change Password");
+            $("#spanMyRole").text("My Roles");
+            $("#spanCount").text("Statistics");
+            $("#spanContact").text("Contacts");
+            $("#spanAbout").text("About");
+            $("#spanSetting").text("Setting");
+        }
+    }
 
     return viewModel;
 };

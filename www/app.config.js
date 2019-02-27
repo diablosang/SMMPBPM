@@ -1,4 +1,6 @@
-var appVer = "1.0.3";
+﻿var appVer = "1.1.0";
+var nullDeviceType = "phone";
+var asUserList = [];
 
 window.Mobile = $.extend(true, window.Mobile, {
   "config": {

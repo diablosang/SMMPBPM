@@ -129,6 +129,9 @@
         }
         else {
             viewModel.title("Favorites");
+            $("#spanFav").text("Favorites");
+            $("#spanRecent").text("Recently Used");
+            $("#spanMost").text("Most Frequently Used");
         }
     }
 };

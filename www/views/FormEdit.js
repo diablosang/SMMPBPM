@@ -10,8 +10,9 @@
         winbox: {},
         keepCache: false,
         clickTrigger: true,
-        eventTrigger:true,
-        imageField: "",
+        eventTrigger: true,
+        attachType: "",
+        attachField: "",
         viewShown: function () {
             if (viewModel.keepCache == true) {
                 viewModel.keepCache = false;
@@ -51,6 +52,26 @@
                     this.commentButton(e.itemData.name);
                 }
                 else {
+                    if (e.itemData.name == "wfhist") {
+                        OpenWFHist();
+                        return;
+                    }
+
+                    if (e.itemData.name == "recall") {
+                        var dialog = DevExpress.ui.dialog.custom({
+                            title: SysMsg.info,
+                            message: SysMsg.dialogRecall,
+                            buttons: [{ text: SysMsg.yes, value: true, onClick: function () { return true; } }, { text: SysMsg.no, value: false, onClick: function () { return false; } }]
+                        });
+
+                        dialog.show().done(function (dialogResult) {
+                            if (dialogResult == true) {
+                                ButtonClick(viewModel, "BMAINBLOCK", e.itemData.name, "", params);
+                            }
+                        });
+                        return;
+                    }
+
                     if (e.itemData.EXTPROP != null) {
                         if (e.itemData.EXTPROP.RUNAT == "DEVICE") {
                             ButtonClickDevice(e.itemData);
@@ -60,6 +81,43 @@
 
                     ButtonClick(viewModel, "BMAINBLOCK", e.itemData.name, "", params);
                 }
+            }
+        },
+        gridWFHistOption: {
+            dateSerializationFormat: "yyyy-MM-ddTHH:mm:ss",
+            columnAutoWidth: true,
+            columns: [
+                {
+                    dataField: "CREUSR", caption: SysMsg.wfCREUSR, allowEditing: false, allowSorting: false, lookup: {
+                        dataSource: asUserList,
+                        displayExpr: "IDNUM",
+                        valueExpr:"DES"
+                    }
+                },
+                { dataField: "CREDAT", caption: SysMsg.wfCREDAT, allowEditing: false, allowSorting: false, dataType: "date", format: "yyyy-MM-dd HH:mm:ss" },
+                { dataField: "GRPID", caption: SysMsg.wfGRPID, allowEditing: false, allowSorting: false },
+                { dataField: "BTNID", caption: SysMsg.wfBTNID, allowEditing: false, allowSorting: false },
+                { dataField: "COMMENT", caption: SysMsg.wfCOMMENT, allowEditing: false, allowSorting: false }
+            ],
+            selection: {
+                mode: "single"
+            },
+            paging: {
+                enabled: false
+            }
+        },
+        popCommentOption: {
+            title: SysMsg.wfCOMMENT,
+            showTitle: true,
+            visible: this.commentVisible,
+            height: 250
+        },
+        popWFHistOption: {
+            title: SysMsg.wfhist,
+            showTitle: true,
+            visible: false,
+            onShown: function (e) {
+                BindWFHistData();
             }
         },
         onCommentClick: function (e) {
@@ -153,13 +211,8 @@
 
             if (field.CTRLTYPE == "9") {
                 $("<div>")
-                     .append($("<img>", { "src": "data:image;base64," + fieldValue, "class": "FormSizedImg", "id": feID}))
-                     .appendTo($fv);
-
-                //$("#divBlock").on("click",".FormSizedImg",function () {
-                //    Mobile.app.navigate("ViewImage");
-                //});
-
+                    .append($("<img>", { "src": "data:image;base64," + fieldValue, "class": "FormSizedImg", "id": feID }))
+                    .appendTo($fv);
                 $fv.append("<div id='itp" + feID + "'>");
                 var itp = $("#itp" + feID);
                 var obu = {
@@ -194,7 +247,7 @@
                         else {
                             viewModel.eventTrigger = true;
                         }
-                        
+
                     },
                     onFocusIn: function (e) {
                         if (this.option("dataWindow") != null) {
@@ -204,6 +257,29 @@
                 }
 
                 createMainControl(feID, $fv, field, editorOption);
+
+                if (field.CTRLTYPE == "914") {
+                    $fv.append("<div id='itp" + feID + "'>");
+                    var itp = $("#itp" + feID);
+                    var obu = {
+                        icon: "images/upload.png",
+                        block: block.IDNUM,
+                        field: field.FIELDNAME,
+                        onClick: function (e) {
+                            FileUpload(e);
+                        }
+                    }
+                    var obc = {
+                        icon: "images/open.png",
+                        block: block.IDNUM,
+                        field: field.FIELDNAME,
+                        onClick: function (e) {
+                            FileOpen(this);
+                        }
+                    }
+                    $("<div>").appendTo(itp).dxButton(obu);
+                    $("<div style='margin-left:10px'>").appendTo(itp).dxButton(obc);
+                }
             }
         }
 
@@ -221,21 +297,32 @@
                 return;
             }
             var file = inputObj.files[0];
-            if (!/image\/\w+/.test(file.type)) {
-                ServerError("Not an image file selected");
-                return;
+
+            if (viewModel.attachType == "image") {
+                if (!/image\/\w+/.test(file.type)) {
+                    ServerError("Not an image file selected");
+                    return;
+                }
             }
+
 
             viewModel.indicatorVisible(true);
 
             var reader = new FileReader();
             reader.onload = function (e) {
                 var postData = {
+                    name: file.name,
                     value: this.result,
-                    block: viewModel.block.IDNUM,
-                    field: viewModel.imageField
+                    block: "BMAINBLOCK",
+                    field: viewModel.attachField
                 }
-                PostImage(postData);
+
+                if (viewModel.attachType == "image") {
+                    PostImage(postData);
+                }
+                else {
+                    PostFile(postData);
+                }
                 inputObj.value = "";
             }
             reader.readAsDataURL(inputObj.files[0]);
@@ -355,6 +442,16 @@
         var baritemRefresh = { location: 'before', widget: 'button', name: "refresh", needComment: "0", options: { icon: "refresh" } };
         baritems.push(baritemRefresh);
 
+        if (viewModel.winbox.WORKFLOW == "1") {
+            var baritemWFHIST = { location: 'before', widget: 'button', name: "wfhist", needComment: "0", options: { icon: "event" } };
+            baritems.push(baritemWFHIST);
+        }
+
+        if (viewModel.winbox.RECALL == "1") {
+            var baritemRecall = { location: 'before', widget: 'button', name: "recall", needComment: "0", options: { icon: "revert" } };
+            baritems.push(baritemRecall);
+        }
+
 
         for (var b = 0; b < block.button.length; b++) {
             var button = block.button[b];
@@ -462,9 +559,9 @@
                 var result = result.text;
                 CallbackServer(button.EXTPROP.CALLBACK, result);
             },
-          function (error) {
-              DevExpress.ui.notify("扫描失败: " + error, "error", 3000);
-          });
+                function (error) {
+                    DevExpress.ui.notify("扫描失败: " + error, "error", 3000);
+                });
         }
     }
 
@@ -764,7 +861,8 @@
         viewModel.clickTrigger = true;
         e.event.stopPropagation();
         var button = e.element.dxButton("instance");
-        viewModel.imageField = button.option("field");
+        viewModel.attachType = "image";
+        viewModel.attachField = button.option("field");
         var inputObj = $("#fileSelector")[0];
         inputObj.click();
 
@@ -797,6 +895,93 @@
             },
             { destinationType: Camera.DestinationType.DATA_URL }
         );
+    }
+
+    function FileUpload(e) {
+        viewModel.clickTrigger = true;
+        e.event.stopPropagation();
+        var button = e.element.dxButton("instance");
+        viewModel.attachType = "";
+        viewModel.attachField = button.option("field");
+        var inputObj = $("#fileSelector")[0];
+        inputObj.click();
+    }
+
+    function FileOpen(e) {
+        var u = sessionStorage.getItem("username");
+        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetFileID";
+
+        var postData = {
+            userName: u,
+            blockID: e._options.block,
+            fieldName: e._options.field,
+            rowIndex: viewModel.rowIndex
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: postData,
+            async: false,
+            cache: false,
+            success: function (data, textStatus) {
+                if (data.FID != null && data.FID !="") {
+                    OpenFile(data.FID);
+                }
+
+                viewModel.indicatorVisible(false);
+            },
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                viewModel.indicatorVisible(false);
+                ServerError(xmlHttpRequest.responseText);
+            }
+        });
+    }
+
+    function PostFile(e) {
+        if (viewModel.fieldEvent == false) {
+            return;
+        }
+        var val = e.value;
+        var feID = "fe" + e.block + e.field;
+        var u = sessionStorage.getItem("username");
+        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/FileUpload";
+
+        var postData = {
+            userName: u,
+            blockID: e.block,
+            fieldName: e.field,
+            fileName: e.name,
+            base64Value: val,
+            rowIndex: viewModel.rowIndex
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: postData,
+            async: false,
+            cache: false,
+            success: function (data, textStatus) {
+                if (data.DATA != null) {
+                    viewModel.data = data.DATA[0];
+                    var dr = data.DATA[0];
+                    for (var fieldName in dr) {
+                        var feID = "#fe" + e.block + fieldName;
+                        var editor = $(feID);
+                        if (editor.length > 0) {
+                            editor[Object.keys($(feID).data())[0]]("instance").option("value", dr[fieldName]);
+                        }
+                    }
+                }
+
+                viewModel.indicatorVisible(false);
+            },
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                viewModel.indicatorVisible(false);
+                ServerError(xmlHttpRequest.responseText);
+            }
+        });
     }
 
     function PostImage(e) {
@@ -841,6 +1026,38 @@
                     }
                 }
 
+                viewModel.indicatorVisible(false);
+            },
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                viewModel.indicatorVisible(false);
+                ServerError(xmlHttpRequest.responseText);
+            }
+        });
+    }
+
+    function OpenWFHist() {
+        var popWFHist = $("#popWFHist").dxPopup("instance");
+        popWFHist.show();
+    }
+
+    function BindWFHistData() {
+        viewModel.indicatorVisible(true);
+        var u = sessionStorage.getItem("username");
+        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetWFHistory";
+
+        var postData = {
+            userName: u
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: postData,
+            async: false,
+            cache: false,
+            success: function (data, textStatus) {
+                var gridWFHist = $("#gridWFHist").dxDataGrid("instance");
+                gridWFHist.option("dataSource", data);
                 viewModel.indicatorVisible(false);
             },
             error: function (xmlHttpRequest, textStatus, errorThrown) {

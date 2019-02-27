@@ -10,13 +10,21 @@
     {
         
         case "2": {
-            if (field.DS_DATA.length > 0)
-            {
+            if (field.DSTYPE == "5") {
                 col.lookup = {
-                    dataSource: field.DS_DATA,
+                    dataSource: asUserList,
                     displayExpr: "DES",
-                    valueExpr: "IDLINE",
+                    valueExpr: "IDNUM",
                 };
+            }
+            else {
+                if (field.DS_DATA.length > 0) {
+                    col.lookup = {
+                        dataSource: field.DS_DATA,
+                        displayExpr: "DES",
+                        valueExpr: "IDLINE",
+                    };
+                }
             }
             break;
         }
@@ -26,6 +34,7 @@
         }
         case "4": {
             col.dataType = "date";
+            col.format = field.DSPFORMAT;
             break;
         }
         case "7": {
@@ -59,15 +68,24 @@ function createMainControl(id, $parent,field,option)
             break;
         }
         case "2": {
-            if (field.DS_DATA.length > 0) {
-                option.dataSource = field.DS_DATA;
+            if (field.DSTYPE == "5") {
+                option.dataSource = asUserList;
                 option.displayExpr = "DES";
-                option.valueExpr = "IDLINE";
+                option.valueExpr = "IDNUM";
 
                 $('<div>').attr('id', feID).appendTo($parent).dxSelectBox(option);
             }
             else {
-                $('<div>').attr('id', feID).appendTo($parent).dxTextBox(option);
+                if (field.DS_DATA.length > 0) {
+                    option.dataSource = field.DS_DATA;
+                    option.displayExpr = "DES";
+                    option.valueExpr = "IDLINE";
+
+                    $('<div>').attr('id', feID).appendTo($parent).dxSelectBox(option);
+                }
+                else {
+                    $('<div>').attr('id', feID).appendTo($parent).dxTextBox(option);
+                }
             }
             break;
         }
@@ -94,6 +112,11 @@ function createMainControl(id, $parent,field,option)
         case "8": {
             option.dataWindow = true;
             //option.readOnly = true;
+            $('<div>').attr('id', feID).appendTo($parent).dxTextBox(option);
+            break;
+        }
+        case "914": {
+            option.disabled = true;
             $('<div>').attr('id', feID).appendTo($parent).dxTextBox(option);
             break;
         }
@@ -180,6 +203,30 @@ function OpenListView(funcid) {
     Mobile.app.navigate(view);
 }
 
+function OpenPlugInView(funcid) {
+    var sessionStorage = window.sessionStorage;
+    var u = sessionStorage.getItem("username");
+    var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetPlugInViewInfo";
+    var postData = {
+        userName: u,
+        func: funcid
+    };
+
+    $.ajax({
+        type: 'POST',
+        data: postData,
+        url: url,
+        cache: false,
+        success: function (data, textStatus) {
+            var view = data.view;
+            Mobile.app.navigate(view);
+        },
+        error: function (xmlHttpRequest, textStatus, errorThrown) {
+            ServerError(xmlHttpRequest.responseText);
+        }
+    });
+}
+
 function OpenASGroup(funcid) {
     //var asGroup = $("#asGroup").dxActionSheet("instance");
     var pop = $("#popGroup").dxPopup("instance");
@@ -257,4 +304,40 @@ function GetQueryVariable(variable) {
         if (pair[0] == variable) { return pair[1]; }
     }
     return null;
+}
+
+function GetDeviceType() {
+    var deviceType = DevExpress.devices.deviceType;
+
+    if (deviceType == null) {
+        return nullDeviceType;
+    }
+
+    var platform = DevExpress.devices.real().platform;
+    if (deviceType == "desktop") {
+        return "PC";
+    }
+    else if (deviceType == "phone") {
+        return platform;
+    }
+    else {
+        return platform + "PAD";
+    }
+}
+
+function OpenFile(fileID) {
+    var u = sessionStorage.getItem("username");
+    var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/DownloadFile?UserName=" + u + "&FILEID=" + fileID;
+    $.ajax({
+        type: 'GET',
+        url: url,
+        cache: false,
+        success: function (data, textStatus) {
+            var furl = $("#WebApiServerURL")[0].value + "/Asapment/Temp/" + data.file;
+            window.open(furl);
+        },
+        error: function (xmlHttpRequest, textStatus, errorThrown) {
+            ServerError(xmlHttpRequest.responseText);
+        }
+    });
 }

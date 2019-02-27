@@ -103,6 +103,7 @@
                     viewModel.indicatorVisible(false);
                     var view = "Dash";
                     var option = { root: true };
+                    GetUserList(u);
                     Mobile.app.navigate(view, option);
 
                 },
@@ -218,6 +219,23 @@
             $("#txtPwd").dxTextBox("instance").option("placeholder", "Please input password");
             $("#btnLogin").dxButton("instance").option("text", "Login");
         }
+    }
+
+    function GetUserList(u) {
+        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetUserList?UserName=" + u;
+
+        $.ajax({
+            type: 'GET',
+            url: url,
+            cache: false,
+            success: function (data, textStatus) {
+                asUserList = data;
+            },
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                viewModel.indicatorVisible(false);
+                ServerError(xmlHttpRequest.responseText);
+            }
+        });
     }
 };
 

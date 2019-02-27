@@ -4,7 +4,7 @@
       <div class="MenuGP">
         <div class="MenuGH">
           <img src="images/fav.png"/>
-          <div>收藏夹</div>
+          <div id="spanFav">收藏夹</div>
         </div>
         <table id="tbM1" class="MenuGCTB">
         </table>
@@ -12,7 +12,7 @@
       <div class="MenuGP">
         <div class="MenuGH">
           <img src="images/recent.png"/>
-          <div>最近访问的功能</div>
+          <div id="spanRecent">最近访问的功能</div>
         </div>
         <table id="tbM2" class="MenuGCTB">
         </table>
@@ -20,7 +20,7 @@
       <div class="MenuGP">
         <div class="MenuGH">
           <img src="images/popular.png"/>
-          <div>最常使用的功能</div>
+          <div id="spanMost">最常使用的功能</div>
         </div>
         <table id="tbM3" class="MenuGCTB">
         </table>

@@ -75,8 +75,8 @@
         },
         tabOptions: {
             items: [
-                { text: "待办事项", icon: "images/todo.png" },
-                { text: "系统通知", icon: "images/message.png" },
+                { text: SysMsg.todo, icon: "images/todo.png" },
+                { text: SysMsg.notice, icon: "images/message.png" },
             ],
             selectedIndex: 0,
             onItemClick: function (e) {

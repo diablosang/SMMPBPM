@@ -32,7 +32,13 @@
             onItemClick: function (e) {
                 var pop = $("#popGroup").dxPopup("instance");
                 pop.hide();
-                OpenListView(e.itemData.FUNCID);
+                var fType = e.itemData.FUNCTYPE;
+                if (fType == 4 || fType == 5) {
+                    OpenPlugInView(e.itemData.FUNCID);
+                }
+                else {
+                    OpenListView(e.itemData.FUNCID);
+                }
             }
         }
         //asGroupOption: {
@@ -169,7 +175,7 @@
             var curCell = 1;
             var tr;
             dataL2.forEach(function (d2, i2, a2) {
-                if (d2.FUNCTYPE == "2") {
+                if (d2.FUNCTYPE != "1") {
                     if (curCell == 1) {
                         tr = tb.insertRow();
                         var tce = tr.insertCell();
@@ -183,18 +189,24 @@
                     }
                     var tc = tr.cells[curCell-1];
                     var img = GetIconImage(d2.IMAGEID);
-                    var dataGroup = data.filter(function (e) { return e.PARENT == d2.FUNCID && e.MTYPE == "GROUP"; });
                     var action;
-                    if (dataGroup.length == 0)
-                    {
-                        return;
-                    }
-                    else if (dataGroup.length == 1) {
-                        action = "OpenListView('" + dataGroup[0].FUNCID + "')";
+                    if (d2.FUNCTYPE == "5" || d2.FUNCTYPE == "10") {
+                        action = "OpenPlugInView('" + d2.FUNCID + "')";
                     }
                     else {
-                        action = "OpenASGroup('" + d2.FUNCID + "')";
+                        var dataGroup = data.filter(function (e) { return e.PARENT == d2.FUNCID && e.MTYPE == "GROUP"; });
+                        if (dataGroup.length == 0) {
+                            return;
+                        }
+                        else if (dataGroup.length == 1) {
+                            action = "OpenListView('" + dataGroup[0].FUNCID + "')";
+                        }
+                        else {
+                            action = "OpenASGroup('" + d2.FUNCID + "')";
+                        }
                     }
+
+                    
                     tc.innerHTML = "<div onclick=\"" + action + "\"><img src='" + img + "' /><div>" + d2[desfield] + "</div></div>";
                     curCell++;
                     if (curCell > 4) {
@@ -205,7 +217,7 @@
 
             dataL2.forEach(function (d2, i2, a2) {
                 if (d2.FUNCTYPE == "1") {
-                    var dataL3 = data.filter(function (e) { return e.PARENT == d2.FUNCID && e.MTYPE == "FUNC" && e.FUNCTYPE == "2" });
+                    var dataL3 = data.filter(function (e) { return e.PARENT == d2.FUNCID && e.MTYPE == "FUNC" && e.FUNCTYPE != "1" });
                     if (dataL3.length == 0){
                         return;
                     }
@@ -231,18 +243,23 @@
                             }
                             var tc = tr.cells[curCell - 1];
                             var img = GetIconImage(d3.IMAGEID);
-
-                            var dataGroup = data.filter(function (e) { return e.PARENT == d3.FUNCID && e.MTYPE == "GROUP"; });
                             var action;
-                            if (dataGroup.length == 0) {
-                                return;
-                            }
-                            else if (dataGroup.length == 1) {
-                                action = "OpenListView('" + dataGroup[0].FUNCID + "')";
+                            if (d3.FUNCTYPE == "5" || d3.FUNCTYPE=="10") {
+                                action = "OpenPlugInView('" + d3.FUNCID + "')";
                             }
                             else {
-                                action = "OpenASGroup('" + d3.FUNCID + "')";
+                                var dataGroup = data.filter(function (e) { return e.PARENT == d3.FUNCID && e.MTYPE == "GROUP"; });
+                                if (dataGroup.length == 0) {
+                                    return;
+                                }
+                                else if (dataGroup.length == 1) {
+                                    action = "OpenListView('" + dataGroup[0].FUNCID + "')";
+                                }
+                                else {
+                                    action = "OpenASGroup('" + d3.FUNCID + "')";
+                                }
                             }
+                            
                             tc.innerHTML = "<div onclick=\"" + action + "\"><img src='" + img + "' /><div>" + d3[desfield] + "</div></div>";
                             curCell++;
                             if (curCell > 4) {

@@ -95,6 +95,7 @@
             $("#lblAddress").html("Service Address");
             $("#btnSave").dxButton("instance").option("text", "Save");
             $("#btnScan").dxButton("instance").option("text", "Scan");
+            $("#spanAddress").text("Service Address:");
         }
     }
 };

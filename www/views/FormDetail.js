@@ -9,7 +9,8 @@
         keepCache: false,
         fieldEvent: true,
         clickTrigger: true,
-        imageField:"",
+        attachField: "",
+        attachType:"",
         viewShown: function (e) {
             if (viewModel.keepCache == true) {
                 viewModel.keepCache = false;
@@ -142,6 +143,29 @@
                 };
 
                 createMainControl(feID, $fv, field, editorOption);
+
+                if (field.CTRLTYPE == "914") {
+                    $fv.append("<div id='itp" + feID + "'>");
+                    var itp = $("#itp" + feID);
+                    var obu = {
+                        icon: "images/upload.png",
+                        block: block.IDNUM,
+                        field: field.FIELDNAME,
+                        onClick: function (e) {
+                            FileUpload(e);
+                        }
+                    }
+                    var obc = {
+                        icon: "images/open.png",
+                        block: block.IDNUM,
+                        field: field.FIELDNAME,
+                        onClick: function (e) {
+                            FileOpen(this);
+                        }
+                    }
+                    $("<div>").appendTo(itp).dxButton(obu);
+                    $("<div style='margin-left:10px'>").appendTo(itp).dxButton(obc);
+                }
             }
         }
 
@@ -159,9 +183,12 @@
                 return;
             }
             var file = inputObj.files[0];
-            if (!/image\/\w+/.test(file.type)) {
-                ServerError("Not an image file selected");
-                return;
+
+            if (viewModel.attachType == "image") {
+                if (!/image\/\w+/.test(file.type)) {
+                    ServerError("Not an image file selected");
+                    return;
+                }
             }
 
             viewModel.indicatorVisible(true);
@@ -169,11 +196,19 @@
             var reader = new FileReader();
             reader.onload = function (e) {
                 var postData = {
+                    name: file.name,
                     value: this.result,
                     block: viewModel.block.IDNUM,
-                    field: viewModel.imageField
+                    field: viewModel.attachField
                 }
-                PostImage(postData);
+
+                if (viewModel.attachType == "image") {
+                    PostImage(postData);
+                }
+                else {
+                    PostFile(postData);
+                }
+
                 inputObj.value = "";
             }
             reader.readAsDataURL(inputObj.files[0]);
@@ -320,7 +355,8 @@
         viewModel.clickTrigger = true;
         e.event.stopPropagation();
         var button = e.element.dxButton("instance");
-        viewModel.imageField = button.option("field");
+        viewModel.attachType = "image";
+        viewModel.attachField = button.option("field");
         var inputObj = $("#fileSelector")[0];
         inputObj.click();
         
@@ -353,6 +389,16 @@
             },
             { destinationType: Camera.DestinationType.DATA_URL }
         );
+    }
+
+    function FileUpload(e) {
+        viewModel.clickTrigger = true;
+        e.event.stopPropagation();
+        var button = e.element.dxButton("instance");
+        viewModel.attachType = "";
+        viewModel.attachField = button.option("field");
+        var inputObj = $("#fileSelector")[0];
+        inputObj.click();
     }
 
     function PostImage(e) {
@@ -395,6 +441,83 @@
                             editor[Object.keys($(feID).data())[0]]("instance").option("value", dr[fieldName]);
                         }
                     }
+                }
+
+                viewModel.indicatorVisible(false);
+            },
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                viewModel.indicatorVisible(false);
+                ServerError(xmlHttpRequest.responseText);
+            }
+        });
+    }
+
+    function PostFile(e) {
+        if (viewModel.fieldEvent == false) {
+            return;
+        }
+        var val = e.value;
+        var feID = "fe" + e.block + e.field;
+        var u = sessionStorage.getItem("username");
+        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/FileUpload";
+
+        var postData = {
+            userName: u,
+            blockID: e.block,
+            fieldName: e.field,
+            fileName: e.name,
+            base64Value: val,
+            rowIndex: viewModel.rowIndex
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: postData,
+            async: false,
+            cache: false,
+            success: function (data, textStatus) {
+                if (data.DATA != null) {
+                    viewModel.data = data.DATA[0];
+                    var dr = data.DATA[0];
+                    for (var fieldName in dr) {
+                        var feID = "#fe" + e.block + fieldName;
+                        var editor = $(feID);
+                        if (editor.length > 0) {
+                            editor[Object.keys($(feID).data())[0]]("instance").option("value", dr[fieldName]);
+                        }
+                    }
+                }
+
+                viewModel.indicatorVisible(false);
+            },
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                viewModel.indicatorVisible(false);
+                ServerError(xmlHttpRequest.responseText);
+            }
+        });
+    }
+
+    function FileOpen(e) {
+        var u = sessionStorage.getItem("username");
+        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetFileID";
+
+        var postData = {
+            userName: u,
+            blockID: e._options.block,
+            fieldName: e._options.field,
+            rowIndex: viewModel.rowIndex
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: postData,
+            async: false,
+            cache: false,
+            success: function (data, textStatus) {
+                if (data.FID != null && data.FID != "") {
+                    OpenFile(data.FID);
                 }
 
                 viewModel.indicatorVisible(false);
