@@ -34,6 +34,9 @@
             selection: {
                 mode: "single"
             },
+            scrolling: {
+                useNative: false
+            },
             onSelectionChanged: function (selectedItems) {
                 var selection = selectedItems.selectedRowsData[0];
                 if (selection == null)

@@ -60,71 +60,40 @@
         var sessionStorage = window.sessionStorage;
         var devicetype = DevExpress.devices.real().platform;
 
-        if (serverVer >= 2) {
-            var postData = {
-                UserName: u,
-                Password: p,
-                CHN: pushChn,
-                DeviceID: deviceid,
-                DeviceType: devicetype,
-                Lang: DeviceLang()
-            };
-            var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/Logon2";
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: postData,
-                cache: false,
-                success: function (data, textStatus) {
+        var postData = {
+            UserName: u,
+            Password: p,
+            CHN: pushChn,
+            DeviceID: deviceid,
+            DeviceType: devicetype,
+            Lang: DeviceLang()
+        };
+        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/Logon2";
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: postData,
+            cache: false,
+            success: function (data, textStatus) {
 
-                    sessionStorage.removeItem("username");
-                    sessionStorage.setItem("username", u);
+                sessionStorage.removeItem("username");
+                sessionStorage.setItem("username", u);
 
-                    var localStorage = window.localStorage;
-                    localStorage.setItem("username", u);
-                    localStorage.setItem("password", p);
-                    viewModel.indicatorVisible(false);
-                    var view = "Dash";
-                    var option = { root: true };
-                    GetUserList(u);
-                    Mobile.app.navigate(view, option);
+                var localStorage = window.localStorage;
+                localStorage.setItem("username", u);
+                localStorage.setItem("password", p);
+                viewModel.indicatorVisible(false);
+                var view = "Dash";
+                var option = { root: true };
+                GetUserList(u);
+                Mobile.app.navigate(view, option);
 
-                },
-                error: function (xmlHttpRequest, textStatus, errorThrown) {
-                    viewModel.indicatorVisible(false);
-                    ServerError(xmlHttpRequest.responseText);
-                }
-            });
-        }
-        else {
-            var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/Logon?UserName=" + u + "&Password=" + p
-                + "&CHN=" + viewModel.chn() + "&DeviceID=" + viewModel.deviceid() + "&DeviceType=" + devicetype;
-
-            $.ajax({
-                type: 'GET',
-                url: url,
-                data: postData,
-                cache: false,
-                success: function (data, textStatus) {
-
-                    sessionStorage.removeItem("username");
-                    sessionStorage.setItem("username", u);
-
-                    var localStorage = window.localStorage;
-                    localStorage.setItem("username", u);
-                    localStorage.setItem("password", p);
-                    viewModel.indicatorVisible(false);
-                    var view = "Dash";
-                    var option = { root: true };
-                    Mobile.app.navigate(view, option);
-
-                },
-                error: function (xmlHttpRequest, textStatus, errorThrown) {
-                    viewModel.indicatorVisible(false);
-                    ServerError(xmlHttpRequest.responseText);
-                }
-            });
-        }
+            },
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                viewModel.indicatorVisible(false);
+                ServerError(xmlHttpRequest.responseText);
+            }
+        });
 
     }
 
@@ -158,11 +127,11 @@
             cache: false,
             success: function (data, textStatus) {
                 var newver = data.NewVersion;
-                if (newver == "1") {
+                if (newver != "0") {
                     var closedDialog;
                     var closedDialog = DevExpress.ui.dialog.custom({
                         title: SysMsg.info,
-                        message: SysMsg.newVer,
+                        message: SysMsg.newVer1 + newver + SysMsg.newVer2,
                         buttons: [{ text: SysMsg.yes, value: true, onClick: function () { return true; } }, { text: SysMsg.no, value: false, onClick: function () { return false; } }]
                     });
 

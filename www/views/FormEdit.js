@@ -106,6 +106,9 @@
             },
             paging: {
                 enabled: false
+            },
+            scrolling: {
+                useNative: false
             }
         },
         popCommentOption: {
