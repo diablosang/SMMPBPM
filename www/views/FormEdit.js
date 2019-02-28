@@ -360,31 +360,37 @@
             baritems.push(baritem);
         }
 
-        bar.option({
-            items: baritems,
-            blockID: block.IDNUM,
-            onItemClick: function (e) {
-                switch (e.itemData.name) {
-                    case "new": {
-                        OpenNewDetailForm(e, this.option("blockID"));
-                        break;
-                    }
-                    default: {
-                        if (e.itemData.needComment == "1") {
-                            this.commentVisible(true);
-                            this.comment(e.itemData.options.text);
-                            this.commentButton(e.itemData.name);
+        if (baritems.length == 0) {
+            $("#bar" + block.IDNUM).hide();
+        }
+        else {
+            bar.option({
+                items: baritems,
+                blockID: block.IDNUM,
+                onItemClick: function (e) {
+                    switch (e.itemData.name) {
+                        case "new": {
+                            OpenNewDetailForm(e, this.option("blockID"));
+                            break;
                         }
-                        else {
-                            ButtonClick(viewModel, block.IDNUM, e.itemData.name, "", params);
-                        }
+                        default: {
+                            if (e.itemData.needComment == "1") {
+                                this.commentVisible(true);
+                                this.comment(e.itemData.options.text);
+                                this.commentButton(e.itemData.name);
+                            }
+                            else {
+                                ButtonClick(viewModel, block.IDNUM, e.itemData.name, "", params);
+                            }
 
-                        break;
+                            break;
+                        }
                     }
                 }
-            }
-        });
-        bar.repaint();
+            });
+            bar.repaint();
+        }
+        
 
         for (var i = 0; i < block.field.length; i++) {
             var field = block.field[i];
@@ -416,6 +422,9 @@
             //},
             selection: {
                 mode: 'single'
+            },
+            scrolling: {
+                useNative: false
             },
             dataSource: block.data,
             onRowClick: function (e) {
