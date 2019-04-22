@@ -144,7 +144,7 @@ function ServerError(errorMessage)
 }
 
 function GetIconImage(img) {
-    var url = $("#WebApiServerURL")[0].value + "/images/Asapment/" + img + ".png?v="+Math.random();;
+    var url = serviceURL + "/images/Asapment/" + img + ".png?v="+Math.random();;
     return url;
 }
 
@@ -206,7 +206,7 @@ function OpenListView(funcid) {
 function OpenPlugInView(funcid) {
     var sessionStorage = window.sessionStorage;
     var u = sessionStorage.getItem("username");
-    var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetPlugInViewInfo";
+    var url = serviceURL + "/Api/Asapment/GetPlugInViewInfo";
     var postData = {
         userName: u,
         func: funcid
@@ -327,13 +327,13 @@ function GetDeviceType() {
 
 function OpenFile(fileID) {
     var u = sessionStorage.getItem("username");
-    var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/DownloadFile?UserName=" + u + "&FILEID=" + fileID;
+    var url = serviceURL + "/Api/Asapment/DownloadFile?UserName=" + u + "&FILEID=" + fileID;
     $.ajax({
         type: 'GET',
         url: url,
         cache: false,
         success: function (data, textStatus) {
-            var furl = $("#WebApiServerURL")[0].value + "/Asapment/Temp/" + data.file;
+            var furl = serviceURL + "/Asapment/Temp/" + data.file;
             window.open(furl, '_system', 'location=yes');
         },
         error: function (xmlHttpRequest, textStatus, errorThrown) {

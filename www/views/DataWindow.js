@@ -2,26 +2,35 @@
     var viewModel = {
         title: ko.observable(""),
         searchInited: false,
-        winbox:{},
+        inputValue: "",
+        winbox: {},
         viewShown: function () {
+            this.inputValue = "";
             BindData();
         },
         viewHidden: function (e) {
             var cache = Mobile.app.viewCache;
             cache.removeView(e.viewInfo.key);
-
         },
-        toolBarOption:{
+        toolBarOption: {
             items: [
-               { location: 'before', widget: 'button', name: 'find', options: { icon: 'find', text: '' } }
+                { location: 'before', widget: 'button', name: 'find', options: { icon: 'find', text: '' } }
             ],
             onItemClick: function (e) {
-                switch (e.itemData.name){
+                switch (e.itemData.name) {
                     case "find":
                         {
                             var popup = $("#popDWSearch").dxPopup("instance");
                             popup.show();
                             break;
+                        }
+                    case "input":
+                        {
+                            var p = JSON.parse(sessionStorage.getItem("dwParam"));
+                            var input = {};
+                            input[p.fieldName] = viewModel.inputValue;
+                            sessionStorage.setItem("dwInput","1");
+                            ProcessSelection(input);
                         }
                 }
             }
@@ -39,8 +48,7 @@
             },
             onSelectionChanged: function (selectedItems) {
                 var selection = selectedItems.selectedRowsData[0];
-                if (selection == null)
-                {
+                if (selection == null) {
                     return;
                 }
 
@@ -53,15 +61,15 @@
             showTitle: true,
             visible: false,
             toolbarItems:
-               [{
-                   location: 'center', options: {
-                       text: '执行查找',
-                       icon: 'find',
-                       onClick: function (e) {
-                           SearchData(viewModel);
-                       }
-                   }, widget: 'dxButton'
-               }],
+                [{
+                    location: 'center', options: {
+                        text: '执行查找',
+                        icon: 'find',
+                        onClick: function (e) {
+                            SearchData(viewModel);
+                        }
+                    }, widget: 'dxButton'
+                }],
             onShowing: function (e) {
                 if (viewModel.searchInited == true) {
                     return;
@@ -71,7 +79,7 @@
                     var field = this.winbox.field[i];
                     AddSearchField(field, $fsSearch);
                 }
-                viewModel.searchInited=true;
+                viewModel.searchInited = true;
 
             },
             onShown: function (e) {
@@ -112,24 +120,24 @@
 
     function BindData(filter) {
         try {
-            
+
             var sessionStorage = window.sessionStorage;
             var u = sessionStorage.getItem("username");
             var p = JSON.parse(sessionStorage.getItem("dwParam"));
             var postData = {
-                userName:u,
+                userName: u,
                 rowIndex: p.rowIndex,
                 blockID: p.blockID,
                 fieldName: p.fieldName,
                 filterString: filter
             }
 
-            var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetDataWindow";
+            var url = serviceURL + "/Api/Asapment/GetDataWindow";
 
             $.ajax({
                 type: 'POST',
                 url: url,
-                data:postData,
+                data: postData,
                 cache: false,
                 success: function (data, textStatus) {
                     var textSelect = DeviceLang() == "CHS" ? "选择" : "Pick ";
@@ -138,8 +146,7 @@
                     var dataGrid = $('#gridDataWindow').dxDataGrid('instance');
                     var cols = [];
 
-                    for (var i = 0; i<data.field.length; i++)
-                    {
+                    for (var i = 0; i < data.field.length; i++) {
                         var field = data.field[i];
                         var col = createListControl(field, true, null);
                         cols.push(col);
@@ -150,8 +157,27 @@
                         columnAutoWidth: true,
                         dataSource: data.data
                     });
-                    
+
                     dataGrid.refresh();
+
+                    if (data.verify == "0") {
+                        var toolbar = $("#toolbarDW").dxToolbar("instance");
+                        var items = toolbar.option("items");
+                        items.push({
+                            widget: 'dxTextBox',
+                            options: {
+                                placeholder: SysMsg.inputValueHolder,
+                                width: "200px",
+                                onValueChanged: function (e) {
+                                    viewModel.inputValue = e.value;
+                                }
+                            },
+                            location: 'before'
+                        });
+                        items.push({ location: 'before', widget: 'button', name: 'input', options: { icon: 'edit' } });
+                        toolbar.option("items", items);
+                    }
+
                 },
                 error: function (xmlHttpRequest, textStatus, errorThrown) {
                     ServerError(xmlHttpRequest.responseText);
@@ -163,8 +189,7 @@
         }
     };
 
-    function ProcessSelection(selection)
-    {
+    function ProcessSelection(selection) {
         var sessionStorage = window.sessionStorage;
         sessionStorage.setItem("viewAction", "dataWindow");
         sessionStorage.setItem("dwData", JSON.stringify(selection));

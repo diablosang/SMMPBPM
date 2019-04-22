@@ -1,4 +1,4 @@
-﻿<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.smmp.client" version="1.1.20" versionCode="">
+﻿<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.smmp.client" version="1.2.0" versionCode="">
   <name>BPM</name>
   <description>SMMP BPM</description>
   <author email="ITservice@smmpwt.com.cn" href="http://http://www.smmpwt.com.cn/">ITservice</author>
@@ -8,7 +8,7 @@
   <preference name="SplashScreenDelay" value="60000" />
   <preference name="AutoHideSplashScreen" value="false" />
   
-  <preference name="orientation" value="portrait" />
+  <preference name="orientation" value="default" />
   <preference name="DisallowOverscroll" value="true" />
   <preference name="StatusBarOverlaysWebView" value="true" />
   <preference name="StatusBarBackgroundColor" value="#00243E" />

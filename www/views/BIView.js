@@ -21,7 +21,7 @@
     function GetBIViewName(viewModel, params) {
         viewModel.indicatorVisible(true);
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetBIViewName?UserName=" + u + "&FUNCID=" + params.FUNCID;
+        var url = serviceURL + "/Api/Asapment/GetBIViewName?UserName=" + u + "&FUNCID=" + params.FUNCID;
 
         $.ajax({
             type: 'GET',
@@ -58,7 +58,7 @@
     function GetViewData(viewModel, params,vid) {
         viewModel.indicatorVisible(true);
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetViewData?UserName=" + u + "&FUNCID=" + params.FUNCID + "&GROUPID=" + params.GROUPID+"&VID="+vid;
+        var url = serviceURL + "/Api/Asapment/GetViewData?UserName=" + u + "&FUNCID=" + params.FUNCID + "&GROUPID=" + params.GROUPID+"&VID="+vid;
 
         $.ajax({
             type: 'GET',

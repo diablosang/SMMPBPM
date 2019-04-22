@@ -26,6 +26,10 @@
                     if (viewAction == "dataWindow") {
                         UpdateDataWindow();
                     }
+
+                    if (viewAction == "orgSelect") {
+                        ContinueZB();
+                    }
                 }
                 return;
             }
@@ -68,7 +72,7 @@
 
                         dialog.show().done(function (dialogResult) {
                             if (dialogResult == true) {
-                                ButtonClick(viewModel, "BMAINBLOCK", e.itemData.name, "", params);
+                                ButtonClick("BMAINBLOCK", e.itemData.name, "", params);
                             }
                         });
                         return;
@@ -81,7 +85,7 @@
                         }
                     }
 
-                    ButtonClick(viewModel, "BMAINBLOCK", e.itemData.name, "", params);
+                    ButtonClick("BMAINBLOCK", e.itemData.name, "", params);
                 }
             }
         },
@@ -132,7 +136,14 @@
         onCommentClick: function (e) {
             var popComment = $("#popComment").dxPopup("instance");
             popComment.hide();
-            ButtonClick(viewModel, "BMAINBLOCK", this.commentButton(), this.comment(), params);
+            var button = this.commentButton();
+            if (button == "BTNSYSWFZB") {
+                FinishZB(this.comment());
+            }
+            else {
+                ButtonClick("BMAINBLOCK", this.commentButton(), this.comment(), params);
+            }
+            
         }
         //  Put the binding properties here
     };
@@ -162,6 +173,7 @@
         divTab.option({
             dataSource: dataTabs,
             selectedIndex: 0,
+            scrollByContent:true,
             onItemClick: function (e) {
 
                 var $blocks = $("#divBlock").children();
@@ -383,7 +395,7 @@
                                 this.commentButton(e.itemData.name);
                             }
                             else {
-                                ButtonClick(viewModel, block.IDNUM, e.itemData.name, "", params);
+                                ButtonClick(block.IDNUM, e.itemData.name, "", params);
                             }
 
                             break;
@@ -474,9 +486,9 @@
 
         for (var b = 0; b < block.button.length; b++) {
             var button = block.button[b];
-            if (button.BTNID == "BTNSYSWFZB") {
-                continue;
-            }
+            //if (button.BTNID == "BTNSYSWFZB") {
+            //    continue;
+            //}
             var baritem = { location: 'before', widget: 'button', name: button.BTNID, needComment: button.NEEDCOMMENT, options: { text: button.DES }, EXTPROP: button.EXTPROP };
             baritems.push(baritem);
         }
@@ -506,10 +518,10 @@
         var u = sessionStorage.getItem("username");
         var url = "";
         if (params.NEW == "1") {
-            url = $("#WebApiServerURL")[0].value + "/Api/Asapment/NewDoc?UserName=" + u + "&FUNCID=" + params.FUNCID + "&GROUPID=" + params.GROUPID;
+            url = serviceURL + "/Api/Asapment/NewDoc?UserName=" + u + "&FUNCID=" + params.FUNCID + "&GROUPID=" + params.GROUPID;
         }
         else {
-            url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetWinbox?UserName=" + u + "&FUNCID=" + params.FUNCID + "&GROUPID=" + params.GROUPID + "&DOCID=" + params.DOCID;
+            url = serviceURL + "/Api/Asapment/GetWinbox?UserName=" + u + "&FUNCID=" + params.FUNCID + "&GROUPID=" + params.GROUPID + "&DOCID=" + params.DOCID;
         }
 
 
@@ -537,10 +549,17 @@
         });
     }
 
-    function ButtonClick(viewModel, BLOCKID, BTNID, comment, params) {
+    function ButtonClick(BLOCKID, BTNID, comment, params) {
+        if (BTNID == "BTNSYSWFZB") {
+            viewModel.keepCache = true;
+            Mobile.app.navigate("ORGSelect");
+            return;
+        }
+
+
         viewModel.indicatorVisible(true);
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/ButtonClick2?UserName=" + u + "&BLOCKID=" + BLOCKID + "&BTNID=" + BTNID + "&COMMENT=" + comment;
+        var url = serviceURL + "/Api/Asapment/ButtonClick2?UserName=" + u + "&BLOCKID=" + BLOCKID + "&BTNID=" + BTNID + "&COMMENT=" + comment;
         url = encodeURI(url);
         $.ajax({
             type: 'GET',
@@ -557,12 +576,40 @@
                     }
 
                     if (data.Message != "") {
-                        ButtonClick(viewModel, "", "refresh", "", "");
+                        ButtonClick("", "refresh", "", "");
                         DevExpress.ui.notify(data.Message, "success", 2000);
                     }
                 }
                 viewModel.indicatorVisible(false);
 
+            },
+            error: function (xmlHttpRequest, textStatus, errorThrown) {
+                viewModel.indicatorVisible(false);
+                ServerError(xmlHttpRequest.responseText);
+            }
+        });
+    }
+
+    function ContinueZB() {
+        var popComment = $("#popComment").dxPopup("instance");
+        popComment.show();
+        viewModel.commentVisible(true);
+        viewModel.comment("");
+        viewModel.commentButton("BTNSYSWFZB");
+    }
+
+    function FinishZB(comment) {
+        viewModel.indicatorVisible(true);
+        var u = sessionStorage.getItem("username");
+        var url = serviceURL + "/Api/Asapment/ButtonClick2?UserName=" + u + "&BLOCKID=BMAINBLOCK&BTNID=BTNSYSWFZB&COMMENT=" + comment;
+        url = encodeURI(url);
+        $.ajax({
+            type: 'GET',
+            url: url,
+            cache: false,
+            success: function (data, textStatus) {
+                viewModel.indicatorVisible(false);
+                (new DevExpress.framework.dxCommand({ onExecute: "#_back" })).execute();
             },
             error: function (xmlHttpRequest, textStatus, errorThrown) {
                 viewModel.indicatorVisible(false);
@@ -590,7 +637,7 @@
     function CallbackServer(callback, result) {
         viewModel.indicatorVisible(true);
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/CallbackServer?UserName=" + u + "&Callback=" + callback + "&Result=" + result;
+        var url = serviceURL + "/Api/Asapment/CallbackServer?UserName=" + u + "&Callback=" + callback + "&Result=" + result;
         url = encodeURI(url);
         $.ajax({
             type: 'GET',
@@ -603,7 +650,7 @@
                 }
 
                 if (data.Message != "") {
-                    ButtonClick(viewModel, "", "refresh", "", "");
+                    ButtonClick("", "refresh", "", "");
                     DevExpress.ui.notify(data.Message, "success", 2000);
                 }
                 viewModel.indicatorVisible(false);
@@ -615,7 +662,6 @@
             }
         });
     }
-
 
     function BindWinboxData(viewModel, data) {
         for (var b in data) {
@@ -672,7 +718,7 @@
 
     function OpenNewDetailForm(e, blockID) {
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/AddNewRow";
+        var url = serviceURL + "/Api/Asapment/AddNewRow";
         var postData = {
             blockID: blockID,
             userName: u
@@ -725,7 +771,7 @@
         loadIndicator.option("visible", true);
 
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/FieldValueChanged";
+        var url = serviceURL + "/Api/Asapment/FieldValueChanged";
         var option = e.component.option();
         var postData = {
             userName: u,
@@ -789,7 +835,7 @@
         }
 
 
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetDataRowV2";
+        var url = serviceURL + "/Api/Asapment/GetDataRowV2";
 
         $.ajax({
             type: 'POST',
@@ -838,12 +884,21 @@
     function UpdateDataWindow() {
         var dwData = [];
         dwData.push(JSON.parse(sessionStorage.getItem("dwData")));
-
-        var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/SetDataWindow";
-
         var param = JSON.parse(sessionStorage.getItem("dwParam"));
 
+        var dwInput = sessionStorage.getItem("dwInput");
+        if (dwInput == "1") {
+            sessionStorage.removeItem("dwInput");
+            var feID = "#fe" + param.blockID + param.fieldName;
+            var inputValue = dwData[0][param.fieldName];
+            $(feID)[Object.keys($(feID).data())[0]]("instance").option("value", inputValue);
+            return;
+        }
+
+        var u = sessionStorage.getItem("username");
+        var url = serviceURL + "/Api/Asapment/SetDataWindow";
+
+       
         var postData = {
             blockID: param.blockID,
             fieldName: param.fieldName,
@@ -931,7 +986,7 @@
 
     function FileOpen(e) {
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetFileID";
+        var url = serviceURL + "/Api/Asapment/GetFileID";
 
         var postData = {
             userName: u,
@@ -967,7 +1022,7 @@
         var val = e.value;
         var feID = "fe" + e.block + e.field;
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/FileUpload";
+        var url = serviceURL + "/Api/Asapment/FileUpload";
 
         var postData = {
             userName: u,
@@ -1013,7 +1068,7 @@
         var val = e.value;
         var feID = "fe" + e.block + e.field;
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/PostImage";
+        var url = serviceURL + "/Api/Asapment/PostImage";
 
         var postData = {
             userName: u,
@@ -1065,7 +1120,7 @@
     function BindWFHistData() {
         viewModel.indicatorVisible(true);
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetWFHistory";
+        var url = serviceURL + "/Api/Asapment/GetWFHistory";
 
         var postData = {
             userName: u

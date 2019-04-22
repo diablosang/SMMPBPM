@@ -346,8 +346,8 @@
     {
         viewModel.indicatorVisible(true);
         var u = sessionStorage.getItem("username");
-        //var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetListData?UserName=" + u + "&page=" + viewModel.curPage();
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetListData2";
+        //var url = serviceURL + "/Api/Asapment/GetListData?UserName=" + u + "&page=" + viewModel.curPage();
+        var url = serviceURL + "/Api/Asapment/GetListData2";
         var postData = {
             user: u,
             page: viewModel.curPage()-1,
@@ -384,7 +384,7 @@
     function GetListWinbox(viewModel, params) {
         viewModel.indicatorVisible(true);
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetListWinbox?UserName=" + u + "&FUNCID=" + params.FUNCID;
+        var url = serviceURL + "/Api/Asapment/GetListWinbox?UserName=" + u + "&FUNCID=" + params.FUNCID;
 
         $.ajax({
             type: 'GET',
@@ -409,7 +409,7 @@
     function AddFavorite(viewModel)
     {
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/AddFavorite?UserName=" + u + "&FUNCID=" + viewModel.funcID() + "&GROUPID=" + viewModel.groupID();
+        var url = serviceURL + "/Api/Asapment/AddFavorite?UserName=" + u + "&FUNCID=" + viewModel.funcID() + "&GROUPID=" + viewModel.groupID();
         $.ajax({
             type: 'GET',
             url: url,

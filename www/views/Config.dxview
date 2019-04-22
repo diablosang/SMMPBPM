@@ -3,7 +3,7 @@
     <div id="spanAddress" class="TextLabel">
       服务器地址：
     </div>
-    <div data-bind="dxTextArea: {value: serviceURL,height: '70px'}" class="InputBox"></div>
+    <div data-bind="dxTextArea: {value: url,height: '70px'}" class="InputBox"></div>
     <div id="btnSave" class="Login_Btn" data-bind="dxButton: { text: '保存', onClick:onSaveClick}"></div>
     <div id="btnScan" class="Login_Btn" data-bind="dxButton: { text: '扫描', onClick:onScan}"></div>
   </div>

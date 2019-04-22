@@ -2,25 +2,18 @@
 
     var viewModel = {
         title: ko.observable(""),
-        serviceURL: ko.observable(""),
+        hideFoot: true,
+        url: ko.observable(""),
         viewShown: function () {
             SetLanguage();
-
-            var localStorage = window.localStorage;
-            var url = localStorage.getItem("serviceurl");
-            if (url != null) {
-                this.serviceURL(url);
-            }
-            else {
-                url = $("#WebApiServerURL")[0].value;
-                serviceURL(url);
-            }
+            this.url(serviceURL);
         },
         onSaveClick: function () {
             var localStorage = window.localStorage;
-            localStorage.setItem("serviceurl", this.serviceURL());
-            $("#WebApiServerURL")[0].value = this.serviceURL();
+            localStorage.setItem("serviceurl", this.url());
+            serviceURL = this.url();
             DevExpress.ui.notify(SysMsg.saveSuccess, "success", 1000);
+            Mobile.app.back();
         },
         onLogoffClick: function () {
             var sessionStorage = window.sessionStorage;
@@ -32,7 +25,7 @@
 
             Mobile.app.viewCache.clear();
             sessionStorage.removeItem("username");
-            var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/Logoff?UserName=" + u;
+            var url = serviceURL + "/Api/Asapment/Logoff?UserName=" + u;
             $.ajax({
                 type: 'GET',
                 url: url,
@@ -74,7 +67,7 @@
              viewModel.serviceURL(url);
              var localStorage = window.localStorage;
              localStorage.setItem("serviceurl", this.serviceURL());
-             $("#WebApiServerURL")[0].value = this.serviceURL();
+             serviceURL = this.serviceURL();
              DevExpress.ui.notify(SysMsg.saveFailed, "success", 1000);
          },
          function (error) {

@@ -1,13 +1,13 @@
-﻿var appVer = "1.1.20";
+﻿var appVer = "1.2.0";
 var nullDeviceType = "PC";
 var asUserList = [];
 var pushChn = "";
 var deviceid = "";
+var serviceURL = "http://180.166.252.90:20191/WebAPITest";
 
 window.Mobile = $.extend(true, window.Mobile, {
   "config": {
     "layoutSet": "navbar",
-    //"layoutSet": "empty",
     "navigation": [
       {
         "title": "待办",

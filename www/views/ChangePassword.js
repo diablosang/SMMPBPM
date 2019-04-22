@@ -54,7 +54,7 @@
         }
 
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/ChangePwd";
+        var url = serviceURL + "/Api/Asapment/ChangePwd";
         var postData = {
             userName: u,
             oldpwd:formData.OLDPWD,

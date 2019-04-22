@@ -120,12 +120,17 @@ $(function () {
     //Mobile.app.navigate();
     if (start == "NBI") {
         var func = GetQueryVariable("func");
-        var group = GetQueryVariable("group");
-        var view = "NBI?func=" + func + "&group=" + group;
+        var crs = GetQueryVariable("crs");
+
+        var view = "NBI?func=" + func;
+        if (crs=="1") {
+            view = view + "&crs=1";
+        }
+
         Mobile.app.navigate(view, { root: true });
     }
     else if (start == "NBIDEBUG") {
-        Mobile.app.navigate("NBI?func=MFG_RPT_BI1&group=GADMIN", { root: true });
+        Mobile.app.navigate("NBI?func=BI_MFGGAUGE", { root: true });
     }
     else {
         Mobile.app.navigate();

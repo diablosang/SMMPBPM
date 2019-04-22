@@ -55,7 +55,7 @@
         try {
             var sessionStorage = window.sessionStorage;
             var u = sessionStorage.getItem("username");
-            var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetUserMenuUpper?UserName=" + u + "&PARENT=" + viewModel.parentFunc();
+            var url = serviceURL + "/Api/Asapment/GetUserMenuUpper?UserName=" + u + "&PARENT=" + viewModel.parentFunc();
             $.ajax({
                 type: 'GET',
                 url: url,
@@ -97,8 +97,8 @@
         try {
             var sessionStorage = window.sessionStorage;
             var u = sessionStorage.getItem("username");
-            //var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetUserMenu?UserName=" + u + "&PARENT=" + viewModel.parentFunc();
-            var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetUserMenu?UserName=" + u + "&PARENT=@ALL";
+            //var url = serviceURL + "/Api/Asapment/GetUserMenu?UserName=" + u + "&PARENT=" + viewModel.parentFunc();
+            var url = serviceURL + "/Api/Asapment/GetUserMenu?UserName=" + u + "&PARENT=@ALL";
             $.ajax({
                 type: 'GET',
                 url: url,

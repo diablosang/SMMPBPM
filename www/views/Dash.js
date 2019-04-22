@@ -97,7 +97,7 @@
         try {
             var sessionStorage = window.sessionStorage;
             var u = sessionStorage.getItem("username");
-            var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetDashData?UserName=" + u;
+            var url = serviceURL + "/Api/Asapment/GetDashData?UserName=" + u;
             $.ajax({
                 type: 'GET',
                 url: url,
@@ -116,7 +116,7 @@
 
             if (serverVer >= 3)
             {
-                var url2 = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetNoticeData?UserName=" + u;
+                var url2 = serviceURL + "/Api/Asapment/GetNoticeData?UserName=" + u;
                 $.ajax({
                     type: 'GET',
                     url: url2,
@@ -138,13 +138,13 @@
         }
 
         //if (serverVer >= 3) {
-        //    var url2 = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetGalleryData?UserName=" + u;
+        //    var url2 = serviceURL + "/Api/Asapment/GetGalleryData?UserName=" + u;
         //    $.ajax({
         //        type: 'GET',
         //        url: url2,
         //        cache: false,
         //        success: function (data, textStatus) {
-        //            var serverUrl = $("#WebApiServerURL")[0].value;
+        //            var serverUrl = serviceURL;
         //            var ds = [];
         //            for (var i = 0; i < data.length; i++) {
         //                var imgurl = serverUrl + "/" + data[i].imgurl;
@@ -182,7 +182,7 @@
     {
         var sessionStorage = window.sessionStorage;
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/SetNoticeRead";
+        var url = serviceURL + "/Api/Asapment/SetNoticeRead";
         var postData = {
             UserName: u,
             IDNUM: IDNUM,

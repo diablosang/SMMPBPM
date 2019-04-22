@@ -28,7 +28,7 @@
         try {
             var sessionStorage = window.sessionStorage;
             var u = sessionStorage.getItem("username");
-            var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetUserFav?UserName=" + u;
+            var url = serviceURL + "/Api/Asapment/GetUserFav?UserName=" + u;
             $.ajax({
                 type: 'GET',
                 url: url,
@@ -41,7 +41,7 @@
                 }
             });
 
-            url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetUserFavCount?UserName=" + u;
+            url = serviceURL + "/Api/Asapment/GetUserFavCount?UserName=" + u;
             $.ajax({
                 type: 'GET',
                 url: url,
@@ -109,7 +109,7 @@
     {
         var sessionStorage = window.sessionStorage;
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/DeleteFavorite?UserName=" + u + "&ITEMID=" + ITEMID;
+        var url = serviceURL + "/Api/Asapment/DeleteFavorite?UserName=" + u + "&ITEMID=" + ITEMID;
         $.ajax({
             type: 'GET',
             url: url,

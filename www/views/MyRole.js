@@ -24,7 +24,7 @@
     function BindData() {
         var sessionStorage = window.sessionStorage;
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetUserRoles";
+        var url = serviceURL + "/Api/Asapment/GetUserRoles";
         var postData = {
             userName:u
         }

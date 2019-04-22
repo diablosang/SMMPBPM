@@ -41,7 +41,11 @@ var chsMsg = {
     wfBTNID: "动作",
     wfCOMMENT: "意见",
     logoff: "注销",
-    dialogRecall:"您确定要召回吗?"
+    dialogRecall: "您确定要召回吗?",
+    orgselect: "选择人员",
+    dept: "部门",
+    userID: "用户",
+    userName: "姓名",
 }
 var engMsg = {
     des:"Description",
@@ -72,7 +76,11 @@ var engMsg = {
     wfBTNID: "Action",
     wfCOMMENT: "Comment",
     logoff: "Log Off",
-    dialogRecall: "Are you sure you want to recall?"
+    dialogRecall: "Are you sure you want to recall?",
+    orgselect: "User Select",
+    dept: "Department",
+    userID: "User",
+    userName:"Name"
 }
 
 

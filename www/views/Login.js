@@ -14,7 +14,7 @@
 
             var url = localStorage.getItem("serviceurl");
             if (url != null && url != "") {
-                $("#WebApiServerURL")[0].value = url;
+                serviceURL = url;
             }
 
             $("#logoImg").attr("src", url + "/logo.png?v=3");
@@ -68,7 +68,7 @@
             DeviceType: devicetype,
             Lang: DeviceLang()
         };
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/Logon2";
+        var url = serviceURL + "/Api/Asapment/Logon2";
         $.ajax({
             type: 'POST',
             url: url,
@@ -99,7 +99,7 @@
 
     function CheckServerVersion() {
         var ver = "1";
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetServerVersion";
+        var url = serviceURL + "/Api/Asapment/GetServerVersion";
         $.ajax({
             type: 'GET',
             url: url,
@@ -118,7 +118,7 @@
 
     function CheckUpdate() {
         var ver = appVer;
-        var url = $("#WebApiServerURL")[0].value + "/Api/Debug/CheckAppVersion2?ver=" + ver;
+        var url = serviceURL + "/Api/Debug/CheckAppVersion2?ver=" + ver;
         var currentplatform = DevExpress.devices.real().platform;
 
         $.ajax({
@@ -139,7 +139,7 @@
                         if (dialogResult == true) {
                             var apkURL = "";
                             if (currentplatform == 'android') {
-                                apkURL = $("#WebApiServerURL")[0].value + "/App/Mobile.apk";
+                                apkURL = serviceURL + "/App/Mobile.apk";
                                 window.open(apkURL, '_system', 'location=yes');
                             }
                             else if (currentplatform == 'ios') {
@@ -174,7 +174,7 @@
     }
 
     function GetUserList(u) {
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetUserList?UserName=" + u;
+        var url = serviceURL + "/Api/Asapment/GetUserList?UserName=" + u;
 
         $.ajax({
             type: 'GET',

@@ -225,7 +225,7 @@
         viewModel.indicatorVisible(true);
 
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/FieldValueChanged";
+        var url = serviceURL + "/Api/Asapment/FieldValueChanged";
         var option = e.component.option();
         var postData = {
             userName: u,
@@ -268,7 +268,7 @@
     function DeleteRow() {
         viewModel.indicatorVisible(true);
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/DeleteRow";
+        var url = serviceURL + "/Api/Asapment/DeleteRow";
         var postData = {
             userName: u,
             blockID: viewModel.block.IDNUM,
@@ -310,11 +310,23 @@
     function UpdateDataWindow() {
         var dwData = [];
         dwData.push(JSON.parse(sessionStorage.getItem("dwData")));
+        var param = JSON.parse(sessionStorage.getItem("dwParam")); 
+
+        var dwInput = sessionStorage.getItem("dwInput");
+        if (dwInput == "1") {
+            sessionStorage.removeItem("dwInput");
+            var feID = "#fe" + param.blockID + param.fieldName;
+            var inputValue = dwData[0][param.fieldName];
+            $(feID)[Object.keys($(feID).data())[0]]("instance").option("value", inputValue);
+            return;
+        }
+
+        
 
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/SetDataWindow";
+        var url = serviceURL + "/Api/Asapment/SetDataWindow";
 
-        var param = JSON.parse(sessionStorage.getItem("dwParam")); 
+        
 
         var postData = {
             blockID: param.blockID,
@@ -408,7 +420,7 @@
         var val = e.value;
         var feID = "fe" + e.block + e.field;
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/PostImage";
+        var url = serviceURL + "/Api/Asapment/PostImage";
 
         var postData = {
             userName: u,
@@ -459,7 +471,7 @@
         var val = e.value;
         var feID = "fe" + e.block + e.field;
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/FileUpload";
+        var url = serviceURL + "/Api/Asapment/FileUpload";
 
         var postData = {
             userName: u,
@@ -500,7 +512,7 @@
 
     function FileOpen(e) {
         var u = sessionStorage.getItem("username");
-        var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/GetFileID";
+        var url = serviceURL + "/Api/Asapment/GetFileID";
 
         var postData = {
             userName: u,
