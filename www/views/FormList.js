@@ -15,6 +15,7 @@
         },
         gridOption: {
             columnAutoWidth: true,
+            wordWrapEnabled: true,
             selection: {
                 mode: "single"
             },
@@ -398,12 +399,23 @@
                 viewModel.keyfield(data.KEYFIELD);
                 InitView(viewModel, params, data);
                 viewModel.indicatorVisible(false);
+                ResizeColumns();
             },
             error: function (xmlHttpRequest, textStatus, errorThrown) {
                 viewModel.indicatorVisible(false);
                 ServerError(xmlHttpRequest.responseText);
             }
         });
+    }
+
+    function ResizeColumns() {
+        //var grid = $("#gridMain").dxDataGrid("instance");
+        //var columns = grid.option("columns");
+        //for (var i = 0; i < columns.length; ++) {
+        //    var col = columns[i].id;
+        //    var width = 
+        //}
+
     }
 
     function AddFavorite(viewModel)

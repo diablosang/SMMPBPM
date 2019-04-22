@@ -173,6 +173,7 @@
         divTab.option({
             dataSource: dataTabs,
             selectedIndex: 0,
+            showNavButtons: false,
             scrollByContent:true,
             onItemClick: function (e) {
 
@@ -415,6 +416,7 @@
             }
 
             var col = createListControl(field, readonly, block);
+      
             cols.push(col);
         }
 
@@ -429,12 +431,6 @@
             paging: {
                 enabled: false
             },
-            //editing:{
-            //    allowAdding:allowAdding,
-            //    allowDeleting:allowDeleting,
-            //    allowUpdating: allowUpdating,
-            //    mode: 'cell'
-            //},
             selection: {
                 mode: 'single'
             },
