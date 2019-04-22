@@ -17,7 +17,7 @@
                 serviceURL = url;
             }
 
-            $("#logoImg").attr("src", url + "/logo.png?v=3");
+            $("#logoImg").attr("src", serviceURL + "/logo.png?v=3");
 
             var u = localStorage.getItem("username");
             if (u != null) {
