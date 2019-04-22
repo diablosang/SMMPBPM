@@ -16,7 +16,7 @@
 
             Mobile.app.viewCache.clear();
             sessionStorage.removeItem("username");
-            var url = $("#WebApiServerURL")[0].value + "/Api/Asapment/Logoff?UserName=" + u;
+            var url = serviceURL + "/Api/Asapment/Logoff?UserName=" + u;
             $.ajax({
                 type: 'GET',
                 url: url,
