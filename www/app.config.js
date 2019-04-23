@@ -1,9 +1,10 @@
-﻿var appVer = "1.2.3";
+﻿var appVer = "1.2.4";
 var nullDeviceType = "PC";
 var asUserList = [];
 var pushChn = "";
 var deviceid = "";
 var serviceURL = "http://180.166.252.90:20191/WebAPITest";
+
 
 window.Mobile = $.extend(true, window.Mobile, {
   "config": {

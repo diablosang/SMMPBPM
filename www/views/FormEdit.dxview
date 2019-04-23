@@ -27,7 +27,7 @@
       </div>
     </div>
     <div id="popWFHist" data-bind="dxPopup: popWFHistOption">
-      <div id="gridWFHist" data-bind="dxDataGrid: gridWFHistOption"></div>
+      <div id="gridWFHist" data-bind="dxDataGrid: gridWFHistOption" class="GridScroll"></div>
     </div>
   </div>
 </div>

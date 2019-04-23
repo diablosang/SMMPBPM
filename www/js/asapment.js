@@ -3,8 +3,16 @@
         dataField: field.FIELDNAME,
         caption: field.DES,
         allowEditing: !readonly,
-        allowSorting:false
+        allowSorting: false
     };
+
+    if (DeviceLang() == "CHS") {
+        col.minWidth = field.DES.length * 20;
+    }
+    else {
+        col.minWidth = field.DES.length * 12;
+    }
+
 
     switch (field.CTRLTYPE)
     {
