@@ -66,7 +66,8 @@
             CHN: pushChn,
             DeviceID: deviceid,
             DeviceType: devicetype,
-            Lang: DeviceLang()
+            Lang: DeviceLang(),
+            appVer: appVer
         };
         var url = serviceURL + "/Api/Asapment/Logon2";
         $.ajax({

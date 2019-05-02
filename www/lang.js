@@ -25,6 +25,7 @@ var chsMsg = {
     scanFailed: "扫描失败：",
     upperFolder: "上级目录",
     rootFolder: "根目录",
+    delete:"删除",
     delSuccess: "删除成功",
     todo: "待办事项",
     notice: "系统通知",
@@ -46,6 +47,7 @@ var chsMsg = {
     dept: "部门",
     userID: "用户",
     userName: "姓名",
+    hide:"隐藏"
 }
 var engMsg = {
     des:"Description",
@@ -60,6 +62,7 @@ var engMsg = {
     scanFailed: "Scan failed: ",
     upperFolder: "Upper Folder",
     rootFolder: "Root Folder",
+    delete: "Delete",
     delSuccess:"Delete success",
     todo: "To Do",
     notice: "Notification",
@@ -80,7 +83,8 @@ var engMsg = {
     orgselect: "User Select",
     dept: "Department",
     userID: "User",
-    userName:"Name"
+    userName: "Name",
+    hide:"Hide"
 }
 
 

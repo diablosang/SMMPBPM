@@ -237,25 +237,29 @@
                     .append($("<img>", { "src": "data:image;base64," + fieldValue, "class": "FormSizedImg", "id": feID }))
                     .appendTo($fv);
                 $fv.append("<div id='itp" + feID + "'>");
-                var itp = $("#itp" + feID);
-                var obu = {
-                    icon: "images/upload.png",
-                    block: block.IDNUM,
-                    field: field.FIELDNAME,
-                    onClick: function (e) {
-                        ImageUpload(e);
+
+                if (readonly == false) {
+                    var itp = $("#itp" + feID);
+                    var obu = {
+                        icon: "images/upload.png",
+                        block: block.IDNUM,
+                        field: field.FIELDNAME,
+                        onClick: function (e) {
+                            ImageUpload(e);
+                        }
                     }
-                }
-                var obc = {
-                    icon: "images/camera.png",
-                    block: block.IDNUM,
-                    field: field.FIELDNAME,
-                    onClick: function (e) {
-                        ImageCamera(e);
+                    var obc = {
+                        icon: "images/camera.png",
+                        block: block.IDNUM,
+                        field: field.FIELDNAME,
+                        onClick: function (e) {
+                            ImageCamera(e);
+                        }
                     }
+                    $("<div>").appendTo(itp).dxButton(obu);
+                    $("<div style='margin-left:10px'>").appendTo(itp).dxButton(obc);
                 }
-                $("<div>").appendTo(itp).dxButton(obu);
-                $("<div style='margin-left:10px'>").appendTo(itp).dxButton(obc);
+           
             }
             else {
                 var editorOption = {
@@ -274,7 +278,9 @@
                     },
                     onFocusIn: function (e) {
                         if (this.option("dataWindow") != null) {
-                            OpenDataWindow(this);
+                            if (e.component.option("readOnly") == false) {
+                                OpenDataWindow(this);
+                            }
                         }
                     },
                 }
@@ -284,14 +290,18 @@
                 if (field.CTRLTYPE == "914") {
                     $fv.append("<div id='itp" + feID + "'>");
                     var itp = $("#itp" + feID);
-                    var obu = {
-                        icon: "images/upload.png",
-                        block: block.IDNUM,
-                        field: field.FIELDNAME,
-                        onClick: function (e) {
-                            FileUpload(e);
+                    if (readonly == false) {
+                        var obu = {
+                            icon: "images/upload.png",
+                            block: block.IDNUM,
+                            field: field.FIELDNAME,
+                            onClick: function (e) {
+                                FileUpload(e);
+                            }
                         }
+                        $("<div>").appendTo(itp).dxButton(obu);
                     }
+
                     var obc = {
                         icon: "images/open.png",
                         block: block.IDNUM,
@@ -300,7 +310,6 @@
                             FileOpen(this);
                         }
                     }
-                    $("<div>").appendTo(itp).dxButton(obu);
                     $("<div style='margin-left:10px'>").appendTo(itp).dxButton(obc);
                 }
             }

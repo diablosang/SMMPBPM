@@ -37,9 +37,6 @@
         },
         indicatorVisible:ko.observable(false),
         toolBarOption: {
-            items: [
-                 { location: 'before', widget: 'button', name: 'delete', options: { icon: 'remove', text: '删除' } }
-            ],
             onItemClick: function (e) {
                 switch (e.itemData.name) {
                     case "delete":
@@ -68,6 +65,21 @@
         else {
             viewModel.title(block.DES);
         }
+
+        var toolbarItems = [];
+        if (block.ALLOWDELETE == "1") {
+            toolbarItems.push({ location: 'before', widget: 'button', name: 'delete', options: { icon: 'remove', text: SysMsg.delete } });
+        }
+
+        if (toolbarItems.length > 0) {
+            var toolBar = $("#toolbarDetail").dxToolbar("instance");
+            toolBar.option("items", toolbarItems);
+        }
+        else {
+            $("#toolbarDetail").hide();
+        }
+
+
 
         for (var i = 0; i < block.field.length; i++) {
             var field = block.field[i];
@@ -105,25 +117,27 @@
                     ShowBigImg( _this);
                 });
 
-                var itp = $("#itp" + feID);
-                var obu={
-                    icon: "images/upload.png",
-                    block: block.IDNUM,
-                    field:field.FIELDNAME,
-                    onClick:function(e){
-                        ImageUpload(e);
+                if (readonly == false) {
+                    var itp = $("#itp" + feID);
+                    var obu = {
+                        icon: "images/upload.png",
+                        block: block.IDNUM,
+                        field: field.FIELDNAME,
+                        onClick: function (e) {
+                            ImageUpload(e);
+                        }
                     }
-                }
-                var obc = {
-                    icon: "images/camera.png",
-                    block: block.IDNUM,
-                    field: field.FIELDNAME,
-                    onClick: function (e) {
-                        ImageCamera(e);
+                    var obc = {
+                        icon: "images/camera.png",
+                        block: block.IDNUM,
+                        field: field.FIELDNAME,
+                        onClick: function (e) {
+                            ImageCamera(e);
+                        }
                     }
+                    $("<div>").appendTo(itp).dxButton(obu);
+                    $("<div style='margin-left:10px'>").appendTo(itp).dxButton(obc);
                 }
-                $("<div>").appendTo(itp).dxButton(obu);
-                $("<div style='margin-left:10px'>").appendTo(itp).dxButton(obc);
             }
             else {
                 var editorOption = {
@@ -137,7 +151,9 @@
                     },
                     onFocusIn: function (e) {
                         if (this.option("dataWindow") != null) {
-                            OpenDataWindow(this);
+                            if (e.component.option("readOnly") == false) {
+                                OpenDataWindow(this);
+                            }                            
                         }
                     }
                 };
@@ -147,14 +163,19 @@
                 if (field.CTRLTYPE == "914") {
                     $fv.append("<div id='itp" + feID + "'>");
                     var itp = $("#itp" + feID);
-                    var obu = {
-                        icon: "images/upload.png",
-                        block: block.IDNUM,
-                        field: field.FIELDNAME,
-                        onClick: function (e) {
-                            FileUpload(e);
+
+                    if (readonly == false) {
+                        var obu = {
+                            icon: "images/upload.png",
+                            block: block.IDNUM,
+                            field: field.FIELDNAME,
+                            onClick: function (e) {
+                                FileUpload(e);
+                            }
                         }
+                        $("<div>").appendTo(itp).dxButton(obu);
                     }
+
                     var obc = {
                         icon: "images/open.png",
                         block: block.IDNUM,
@@ -162,8 +183,7 @@
                         onClick: function (e) {
                             FileOpen(this);
                         }
-                    }
-                    $("<div>").appendTo(itp).dxButton(obu);
+                    }                    
                     $("<div style='margin-left:10px'>").appendTo(itp).dxButton(obc);
                 }
             }

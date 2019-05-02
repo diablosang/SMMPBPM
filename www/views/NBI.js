@@ -8,7 +8,8 @@
         indicatorVisible: ko.observable(false),
         intevalPool: {},
         crsPool: [],
-        nbifunc:"",
+        nbifunc: "",
+        hideHeader:false,
         viewShown: function (e) {
             if (this.inited == false) {
                 this.nbifunc = params.func;
@@ -34,6 +35,12 @@
                 var intevalID = this.intevalPool[key];
                 clearInterval(intevalID);
             }
+        },
+        btnHideExecute: function (e) {
+            $("#layout_header").hide();
+            $("#layout-content").css("top", "0");
+            this.hideHeader = true;
+            BindView();
         }
     };
 
@@ -187,7 +194,12 @@
             }
         }
 
-        var pageHeight = $(document.body).height()-40;
+        var header = 38;
+        if (viewModel.hideHeader == true) {
+            header = 0;
+        }
+
+        var pageHeight = $(document.body).height() - header;
         var itemHeight = 0;
         var itemWidth = parseInt((pageWidth - gap) / cols - gap);
         if (cols == 1) {
@@ -233,6 +245,14 @@
                     BindGaugeItem(item, divCanvas);
                     break;
                 }
+                case "CV": {
+                    BindCaptionValueItem(item, divCanvas);
+                    break;
+                }
+                case "JS": {
+                    BindCustomJSItem(item, divCanvas);
+                    break;
+                }
             }
         }
     }
@@ -241,9 +261,31 @@
         var items = viewModel.ITEM;
         var gap = 5;
         var cols = parseInt(items[0].SIZE);
+
         var pageWidth = $(document.body).width();
+        var maxHeight = 0;
+        for (var i = 0; i < items.length; i++) {
+            var item = items[i];
+            var h = item.POS_Y + item.SIZE_H - 1;
+            if (h > maxHeight) {
+                maxHeight = h;
+            }
+        }
+
+        var header = 38;
+        if (viewModel.hideHeader == true) {
+            header = 0;
+        }
+        var pageHeight = $(document.body).height() - header;
+        var itemHeight = 0;
         var itemWidth = parseInt((pageWidth - gap) / cols - gap);
-        var itemHeight = parseInt(itemWidth / 16 * 10);
+        if (cols == 1) {
+            itemHeight = parseInt(itemWidth / 16 * 10);
+        }
+        else {
+            itemHeight = parseInt((pageHeight - gap) / maxHeight - gap);
+        }
+
         var item;
         var divCanvas = $("#divCanvas");
         for (var i = 0; i < items.length; i++) {
@@ -285,6 +327,14 @@
             }
             case "GAUGE": {
                 BindGaugeItem(item, divCanvas);
+                break;
+            }
+            case "CV": {
+                BindCaptionValueItem(item, divCanvas);
+                break;
+            }
+            case "JS": {
+                BindCustomJSItem(item, divCanvas);
                 break;
             }
         }
@@ -484,6 +534,91 @@
             map.addOverlay(marker);
         }
     }
+
+    function BindCaptionValueItem(item, divCanvas) {
+        var itemInfo = item.itemInfo;
+        var prop = item.SYS_NBIITEMP;
+        var option = viewModel.ITEMP[item.ITEMID];
+        if (option == null) {
+            return;
+        }
+        option.dataSource = viewModel.NBIDATA[item.ITEMID];
+
+        $(itemInfo.htmlItem).appendTo(divCanvas);
+        var divItem = $("#item" + item.ITEMID);
+        divItem.css("top", itemInfo.posY).css("left", itemInfo.posX).css("width", itemInfo.w).css("height", itemInfo.h);
+
+        $("<table>").attr("id","tb" + item.ITEMID).appendTo(divItem);
+        var divTB = $("#tb" + item.ITEMID);
+        divTB.css("width", "100%");
+
+        $("<tr>").attr("id", "tr" + item.ITEMID).appendTo(divTB);
+        var divTR = $("#tr" + item.ITEMID);
+        divTR.css("height", itemInfo.h);
+
+        if (option.style != null) {
+            for (var key in option.style) {
+                divTB.css(key, option.style[key]);
+            }
+        }
+
+        if (option.captionElement != null) {
+            $("<td>").attr("id", "tdCaption" + item.ITEMID).attr('align', 'center').attr('valign', 'middle').appendTo(divTR);
+            var divTD = $("#tdCaption" + item.ITEMID);
+            if (option.valueElement != null) {
+                divTD.css("width", "50%");
+            }
+            else {
+                divTD.css("width", "100%");
+            }
+            //var captionHtml = "<div id='caption" + item.ITEMID + "'>";
+            //$(captionHtml).appendTo(divTD);
+            //var divCaption = $("#caption" + item.ITEMID);
+            divTD.html(option.captionElement.text);
+            if (option.captionElement.style != null) {
+                for (var key in option.captionElement.style) {
+                    divTD.css(key, option.captionElement.style[key]);
+                }
+            }
+        }
+
+        if (option.valueElement != null) {
+            $("<td>").attr("id", "tdValue" + item.ITEMID).attr('align', 'center').attr('valign', 'middle').appendTo(divTR);
+            var divTD = $("#tdValue" + item.ITEMID);
+            if (option.captionElement != null) {
+                divTD.css("width", "50%");
+            }
+            else {
+                divTD.css("width", "100%");
+            }
+            //var valueHtml = "<div id='value" + item.ITEMID + "'>";
+            //$(valueHtml).appendTo(divItem);
+            //var divValue = $("#value" + item.ITEMID);
+            var val = "";
+            var data = viewModel.NBIDATA[item.ITEMID];
+            if (data != null && data.length > 0) {
+                val = viewModel.NBIDATA[item.ITEMID][0][option.valueElement.valueField];
+            }
+
+            divTD.text(val);
+            if (option.valueElement.style != null) {
+                for (var key in option.valueElement.style) {
+                    divTD.css(key, option.valueElement.style[key]);
+                }
+            }
+        }
+    }
+
+    function BindCustomJSItem(item, divCanvas) {
+        var option = viewModel.ITEMP[item.ITEMID];
+        var src = serviceURL + "/CustomJS/" + option.src;
+
+        $.getScript(src, function () {   //加载test.js,成功后，并执行回调函数  
+            var object = "CustomJSObject_" + option.object + ".Create(viewModel,item, divCanvas)";
+            eval(object)
+        });  
+    }
+
 
 
     function AutoUpdateData(item, inteval) {
