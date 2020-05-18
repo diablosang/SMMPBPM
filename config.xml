@@ -3,11 +3,11 @@
 	xmlns:gap="http://phonegap.com/ns/1.0" 
 	xmlns:android="http://schemas.android.com/apk/res/android" 
 	xmlns:cdv="http://cordova.apache.org/ns/1.0"	
-	id="com.smmp.client" version="2.0.1" versionCode="">
+	id="com.smmp.client" version="2.0.2" versionCode="">
   <name>BPM</name>
   <description>SMMP BPM</description>
   <author email="ITservice@smmpwt.com.cn" href="http://http://www.smmpwt.com.cn/">ITservice</author>
-  <preference name="phonegap-version" value="cli-9.0.0" />
+  <preference name="phonegap-version" value="cli-8.0.0" />
   <preference name="permissions" value="none" />
   <preference name="SplashScreen" value="splash" />
   <preference name="SplashScreenDelay" value="60000" />
