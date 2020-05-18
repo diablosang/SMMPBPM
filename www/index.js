@@ -8,7 +8,7 @@ $(function () {
     var start = "";//"NBI";//"NBIDEBUG";
 
     DevExpress.devices.current({ platform: "generic" });
-    BindTheme();
+    //BindTheme();
 
     $(document).on("deviceready", function () {
         navigator.splashscreen.hide();
