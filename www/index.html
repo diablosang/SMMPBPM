@@ -5,21 +5,38 @@
     <link rel="stylesheet" type="text/css" href="css/dx.spa.css" />
     <link rel="stylesheet" type="text/css" href="css/dx.common.css" />
     <link rel="dx-theme" data-theme="generic.light" href="css/dx.light.css" data-active="true" />
+    <link rel="dx-theme" data-theme="generic.dark" href="css/dx.dark.css" data-active="false" />
+    <!--<link rel="dx-theme" data-theme="generic.light" href="css/Trusteem.light.css" data-active="true" />
+    <link rel="dx-theme" data-theme="generic.dark" href="css/Trusteem.dark.css" data-active="false" />-->
+
+
+
+    <!--<link rel="dx-theme" data-theme="generic.light" href="css/Trusteem2.light.css" data-active="true" />
+    <link rel="dx-theme" data-theme="generic.dark" href="css/Trusteem2.dark.css" data-active="false" />-->
+
+    <link rel="stylesheet" type="text/css" href="index.css" />
+
     <!--<link rel="dx-theme" data-theme="generic.light.compact" href="css/dx.light.compact.css" />-->
 
     <title>Mobile</title>
     <meta charset="utf-8" />
+    <meta HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <meta HTTP-EQUIV="Cache-Control" CONTENT="no-store, must-revalidate">
+    <meta HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">
+    <meta HTTP-EQUIV="expires" CONTENT="0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
+
+
+    <!---->
+
+
+
     <script type="text/javascript" src="cordova.js"></script>
-
-
-    <link href="css/Trusteem.css" rel="stylesheet" />
-
     <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
     <!--<![endif]-->
     <script type="text/javascript" src="js/knockout-3.4.0.js"></script>
@@ -32,20 +49,18 @@
     <script type="text/javascript" src="js/globalize/date.min.js"></script>
     <script type="text/javascript" src="js/globalize/message.min.js"></script>
     <script type="text/javascript" src="js/globalize/currency.min.js"></script>
-    <script type="text/javascript" src="js/dx.all.js"></script>
-    <script type="text/javascript" src="js/asapment.js"></script>
+    <!--<script type="text/javascript" src="js/dx.all.js"></script>-->
+    <script type="text/javascript" src="js/dx.all.debug.js"></script>
+    <script type="text/javascript" src="js/asapment.js?ver=3.6.1"></script>
+    <script type="text/javascript" src="js/asapmentMenu.js?ver=3.6.1"></script>
     <!--<script src="js/baidu.js"></script>-->
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=1TUtPPXIFGsuCZ1H4zN52FWGkjWfnUSS"></script>
     <!--<script src="js/localization/dx.messages.zh.js"></script>-->
-    <!--
-    <script type="text/javascript" src="js/dx.all.debug.js"></script>
-    -->
     <!-- Application -->
-    <link rel="stylesheet" type="text/css" href="index.css" />
-    <script type="text/javascript" src="app.config.js?appVer=3.5.0"></script>
-    <script type="text/javascript" src="lang.js"></script>
-    <script type="text/javascript" src="index.js"></script>
-    <link href="css/Trusteem.css" rel="stylesheet" />
+    <script type="text/javascript" src="app.config.js?appVer=3.6.1"></script>
+    <script type="text/javascript" src="lang.js?ver=3.6.1"></script>
+    <script type="text/javascript" src="index.js?ver=3.6.1"></script>
+
     <!-- Layouts -->
     <link rel="stylesheet" type="text/css" href="layouts/Navbar/NavbarLayout.css" />
     <link rel="dx-template" type="text/html" href="layouts/Navbar/NavbarLayout.html" />
@@ -58,7 +73,7 @@
 
     <script type="text/javascript" src="views/Login.js"></script>
     <link rel="dx-template" type="text/html" href="views/Login.dxview" />
-    <link href="views/Login.css" rel="stylesheet" />
+    <link id="cssLogin" href="views/Login.css" rel="stylesheet" />
 
 
     <script type="text/javascript" src="views/DataWindow.js"></script>
@@ -86,71 +101,6 @@
     <script type="text/javascript" src="views/BIView.js"></script>
     <link rel="dx-template" type="text/html" href="views/BIView.dxview" />
 
-    <script type="text/javascript">
-        DevExpress.config({ forceIsoDateParsing: true });
-
-        //var initiateUI = function () {
-        //    try {
-        //        window.JPush.init();
-        //        window.JPush.setDebugMode(true);
-        //        window.setTimeout(getRegistrationID, 1000);
-        //        if (device.platform != "Android") {
-        //            window.JPush.setApplicationIconBadgeNumber(0);
-        //        }
-        //    }
-        //    catch (exception) {
-        //        DevExpress.ui.notify(exception, "error", 3000);
-        //    }
-        //}
-
-        //var onDeviceReady = function () {
-        //    initiateUI();
-        //};
-        //var getRegistrationID = function () {
-        //    window.JPush.getRegistrationID(onGetRegistrationID);
-        //};
-        //var onGetRegistrationID = function (data) {
-        //    try {
-        //        if (data.length == 0) {
-        //            var t1 = window.setTimeout(getRegistrationID, 1000);
-        //        }
-        //        var chn = data;
-        //        var sessionStorage = window.sessionStorage;
-        //        sessionStorage.removeItem("baiduchn");
-        //        sessionStorage.setItem("baiduchn", chn);
-        //    } catch (exception) {
-        //        DevExpress.ui.notify(exception, "error", 3000);
-        //    }
-        //};
-
-        var onOpenNotification = function (event) {
-
-        };
-        var onReceiveNotification = function (event) {
-            var alertContent;
-            if (device.platform == "Android") {
-                alertContent = event.alert;
-            } else {
-                alertContent = event.aps.alert;
-                DevExpress.ui.notify(alertContent, "info", 3000);
-            }
-        };
-        var onReceiveMessage = function (event) {
-            var message;
-            if (device.platform == "Android") {
-                message = event.message;
-            } else {
-                message = event.content;
-            }
-            DevExpress.ui.notify(message, "info", 3000);
-        };
-
-        //document.addEventListener("deviceready", onDeviceReady, false);
-        document.addEventListener("jpush.openNotification", onOpenNotification, false);
-        document.addEventListener("jpush.receiveNotification", onReceiveNotification, false);
-        document.addEventListener("jpush.receiveMessage", onReceiveMessage, false);
-    </script>
-
     <script type="text/javascript" src="views/FormDetail.js"></script>
     <link rel="dx-template" type="text/html" href="views/FormDetail.dxview" />
 
@@ -170,12 +120,35 @@
     <script type="text/javascript" src="views/About.js"></script>
     <link rel="dx-template" type="text/html" href="views/About.dxview" />
 
-    <link href="views/NBI.css" rel="stylesheet" />
-    <script type="text/javascript" src="views/NBI.js"></script>
-    <link rel="dx-template" type="text/html" href="views/NBI.dxview" />
+    <link href="views/NBI.css?ver=3.6.1" rel="stylesheet" />
+    <script type="text/javascript" src="views/NBI.js?ver=3.6.1"></script>
+    <link rel="dx-template" type="text/html" href="views/NBI.dxview?ver=3.6.1" />
 
-		<script type="text/javascript" src="views/ORGSelect.js"></script>
-		<link rel="dx-template" type="text/html" href="views/ORGSelect.dxview"/>
+    <script type="text/javascript" src="views/ORGSelect.js"></script>
+    <link rel="dx-template" type="text/html" href="views/ORGSelect.dxview" />
+
+    <script type="text/javascript">
+        //window.onunload = onunload_handler;
+        function onunload_handler() {
+            var u = sessionStorage.getItem("username");
+            var url = serviceURL + "/Api/Asapment/Logoff?UserName=" + u;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                cache: false,
+                success: function (data, textStatus) {
+
+                },
+                error: function (xmlHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+        }
+
+
+        DevExpress.config({ forceIsoDateParsing: true });
+    </script>
+
 </head>
 <body>
     <!--<input hidden="hidden" value="http://dev.trusteem.com:20020/AsapmentWebAPI" id="WebApiServerURL" />-->

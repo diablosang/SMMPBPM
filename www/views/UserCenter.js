@@ -22,7 +22,7 @@
                 url: url,
                 cache: false,
                 success: function (data, textStatus) {
-                    var view = "Login/0";
+                    var view = "Login";
                     var option = { root: true };
                     Mobile.app.navigate(view, option);
                 },

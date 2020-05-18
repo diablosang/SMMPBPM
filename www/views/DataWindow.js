@@ -206,13 +206,13 @@
 
             switch (field.CTRLTYPE) {
                 case "2": {
-                    if (field.DS_DATA.length > 0) {
-                        control = $(feID).dxSelectBox("instance");
-                    }
-                    else {
-                        control = $(feID).dxTextBox("instance");
-                    }
-
+                    //if (field.DS_DATA.length > 0) {
+                    //    control = $(feID).dxSelectBox("instance");
+                    //}
+                    //else {
+                    //    control = $(feID).dxTextBox("instance");
+                    //}
+                    control = $(feID).dxSelectBox("instance");
                     var val = control.option().value;
                     if (val != null && val.toString() != "") {
                         where = where + " and " + field.FIELDNAME + "='" + val + "'";

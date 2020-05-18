@@ -1,6 +1,7 @@
 "use strict";
+
 (function(root, factory) {
-    /* global define, DevExpress */
+    /* global window, define, DevExpress */
     if (typeof define === 'function' && define.amd) {
         define(function(require, exports, module) {
             module.exports = factory(
@@ -62,10 +63,36 @@
 
     layoutSets["navbar"] = layoutSets["navbar"] || [];
     layoutSets["navbar"].push({
+        platform: "ios",
+        controller: new NavBarController()
+    });
+    layoutSets["navbar"].push({
+        platform: "android",
+        controller: new NavBarController()
+    });
+    layoutSets["navbar"].push({
         platform: "generic",
         controller: new NavBarController()
     });
-  
+    layoutSets["navbar"].push({
+        platform: "win",
+        controller: new NavBarController()
+    });
+
+    layoutSets["split"] = layoutSets["split"] || [];
+    layoutSets["split"].push({
+        platform: "win",
+        phone: false,
+        root: true,
+        pane: "master",
+        controller: new NavBarController()
+    });
+    layoutSets["split"].push({
+        platform: "win",
+        phone: true,
+        controller: new NavBarController()
+    });
+
     exports.NavBarController = NavBarController;
 
     return exports;

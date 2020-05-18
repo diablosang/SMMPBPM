@@ -59,7 +59,7 @@
         viewModel.indicatorVisible(true);
         var sessionStorage = window.sessionStorage;
         var devicetype = DevExpress.devices.real().platform;
-
+       
         var postData = {
             UserName: u,
             Password: p,
@@ -76,7 +76,6 @@
             data: postData,
             cache: false,
             success: function (data, textStatus) {
-
                 sessionStorage.removeItem("username");
                 sessionStorage.setItem("username", u);
 

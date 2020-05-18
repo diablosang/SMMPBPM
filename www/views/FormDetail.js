@@ -110,7 +110,7 @@
                 $("<div>")
                      .append($("<img>", { "src": "data:image;base64," + fieldValue, "class": "FormSizedImg", "id": feID }))
                      .appendTo($fv);
-                $fv.append("<div id='itp" + feID + "'>");
+                $fv.append("<div id='itp" + feID + "' style='margin-top:5px'>");
 
                 $("#fsDetail").on("click", ".FormSizedImg", function () {
                     var _this = $(this);//将当前的pimg元素作为_this传入函数  
@@ -184,7 +184,7 @@
                             FileOpen(this);
                         }
                     }                    
-                    $("<div style='margin-left:10px'>").appendTo(itp).dxButton(obc);
+                    $("<div>").appendTo(itp).dxButton(obc);
                 }
             }
         }

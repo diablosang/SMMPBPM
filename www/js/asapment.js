@@ -103,7 +103,7 @@ function createMainControl(id, $parent,field,option)
         }
         case "4": {
             option.formatString = "yyyy-MM-dd";
-            option.pickerType = "calendar";
+            option.pickerType = "native";
             option.dateSerializationFormat="yyyy-MM-dd";
             $('<div>').attr('id', feID).appendTo($parent).dxDateBox(option);
             break;
@@ -133,6 +133,9 @@ function createMainControl(id, $parent,field,option)
 
 function ServerError(errorMessage)
 {
+    if (debugMode == true) {
+        console.log(errorMessage);
+    }
     DevExpress.ui.notify(errorMessage, "error", 2000);
     if (errorMessage == "NO SESSION") {
         DevExpress.ui.notify("用户登录已失效，请重新登录", "error", 2000);
@@ -142,7 +145,7 @@ function ServerError(errorMessage)
             sessionStorage.removeItem("username");
         }
         Mobile.app.viewCache.clear();
-        var view = "Login/0";
+        var view = "Login";
         var option = { root: true };
         Mobile.app.navigate(view, option);
     }
@@ -166,6 +169,22 @@ function GetTimeString(date) {
     return str[0] + ":" + str[1];
 }
 
+function GetDateString2(date) {
+    var tzoffset = date.getTimezoneOffset() * 60000; //offset in milliseconds
+    var localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
+
+    return localISOTime.split("T")[0];
+}
+
+function GetTimeString2(date) {
+    var tzoffset = date.getTimezoneOffset() * 60000; //offset in milliseconds
+    var localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
+
+    var t = localISOTime.split("T")[1];
+    var str = t.split(":");
+    return str[0] + ":" + str[1] + ":" + str[2].split(".")[0];
+}
+
 function GetDateTimeString(date) {
     var d = date.split("T")[0];
     var t = date.split("T")[1];
@@ -178,13 +197,13 @@ function GetDashCSS(date) {
     var now = new Date();
     var diffDays = (now - date) / (1000 * 60 * 60 * 24);
     if (diffDays > 7) {
-        return "dashDate7";
+        return "DashItem dashDate7";
     }
     else if (diffDays > 7) {
-        return "dashDate3";
+        return "DashItem dashDate3";
     }
     else {
-        return "dashDate";
+        return "DashItem dashDate1";
     }
 }
 
@@ -205,6 +224,9 @@ function GetDashText2(data) {
 function GetDashText3(data) {
     return data.SUBJECT;
 }
+
+
+
 
 function OpenListView(funcid) {
     var view = "FormList?FUNCID=" + funcid;
@@ -242,14 +264,14 @@ function OpenASGroup(funcid) {
 
     var dataGroup = asapmentMenuData.filter(function (e) { return e.PARENT == funcid && e.MTYPE == "GROUP"; });
 
-    var desfield="DES1";
-    if(DeviceLang()=="ENG"){
-        desfield="DES2";
+    var desfield = "DES1";
+    if (DeviceLang() == "ENG") {
+        desfield = "DES2";
     }
 
     var ds = [];
     dataGroup.forEach(function (d, i, a) {
-        ds.push({ text: d[desfield],FUNCID:d.FUNCID });
+        ds.push({ text: d[desfield], FUNCID: d.FUNCID });
     })
 
     var list = $("#listGroup").dxList("instance");

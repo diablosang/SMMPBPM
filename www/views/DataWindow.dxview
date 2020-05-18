@@ -2,7 +2,7 @@
     <div data-options="dxContent : { targetPlaceholder: 'content' } " class="dx-content-background">
         <div id="toolbarDW" data-bind="dxToolbar: toolBarOption"></div>
         <div data-bind="dxScrollView: {useNative: false}" class="ItemList-ScrollView2">
-            <div id="gridDataWindow" data-bind="dxDataGrid: gridDataWindowOptions"></div>
+            <div id="gridDataWindow" data-bind="dxDataGrid: gridDataWindowOptions" class="GridDW"></div>
         </div>
         <div id="popDWSearch" data-bind="dxPopup: searchPopupOption">
             <div id="svDWSearch" data-bind="dxScrollView: { }" class="ItemList-ScrollView2">

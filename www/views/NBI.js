@@ -3,13 +3,14 @@
 
     var viewModel = {
         title: ko.observable(""),
-        inited:false,
+        inited: false,
         hideFoot: true,
         indicatorVisible: ko.observable(false),
         intevalPool: {},
         crsPool: [],
+        loadedCustomJS: [],
         nbifunc: "",
-        hideHeader:false,
+        hideHeader: false,
         viewShown: function (e) {
             if (this.inited == false) {
                 this.nbifunc = params.func;
@@ -24,11 +25,11 @@
                     else {
                         LoadNBIInfo();
                     }
-                }                
+                }
             }
             else {
                 BindView();
-            }     
+            }
         },
         viewHidden: function (e) {
             for (var key in this.intevalPool) {
@@ -53,7 +54,7 @@
         var devicetype = GetDeviceType();
         var u = "ADMIN";
         var postData = {
-            UserName:u,
+            UserName: u,
             Password: "sangguowei",
             CHN: "",
             DeviceID: "",
@@ -109,6 +110,7 @@
                 viewModel.ITEM = data.ITEM;
                 viewModel.ITEMP = data.ITEMP;
                 viewModel.title(data.TITLE);
+                //document.title = data.TITLE;
                 LoadNBIData();
             },
             error: function (xmlHttpRequest, textStatus, errorThrown) {
@@ -168,7 +170,7 @@
                 var items = viewModel.ITEM;
                 for (var i = 0; i < items.length; i++) {
                     var item = items[i];
-                    if (item.AUTOUPD > 0) {
+                    if (item.AUTOUPD > 0 && params.crs != "1") {
                         AutoUpdateData(item.ITEMID, item.AUTOUPD);
                     }
                 }
@@ -208,7 +210,7 @@
         else {
             itemHeight = parseInt((pageHeight - gap) / maxHeight - gap);
         }
-        
+
         var divCanvas = $("#divCanvas");
         divCanvas.empty();
         for (var i = 0; i < items.length; i++) {
@@ -294,7 +296,7 @@
                 break;
             }
         }
-        
+
         var itemInfo = {
             htmlItem: "<div id='item" + item.ITEMID + "' class='NBI_ITEM' />",
             posX: (itemWidth + gap) * (item.POS_X - 1) + gap,
@@ -315,7 +317,6 @@
             case "MAP": {
                 BindMapItem(item, divCanvas);
                 break;
-
             }
             case "GRID": {
                 BindGridItem(item, divCanvas);
@@ -358,7 +359,7 @@
             option.value = data[0][option.valueField];
         }
 
-        
+
 
         var desField = DeviceLang() == "CHS" ? "DES1" : "DES2";
         if (option.title == null) {
@@ -376,12 +377,12 @@
             }
         }
 
-        
+
         switch (option.gaugeType) {
             case "circular": {
                 $(itemInfo.htmlItem).appendTo(divCanvas).dxCircularGauge(option);
                 break;
-            } 
+            }
             case "bar": {
                 $(itemInfo.htmlItem).appendTo(divCanvas).dxBarGauge(option);
                 break;
@@ -438,7 +439,7 @@
         }
 
         option.dataSource = viewModel.NBIDATA[item.ITEMID];
-        option.tooltip.zIndex = 999;
+        option.tooltip.zIndex = 99;
 
         option.onLegendClick = function (e) {
             if (option.chartType == "pie") {
@@ -459,8 +460,25 @@
                     series.show();
                 }
             }
-            
+
         };
+
+
+        if (option.CUSTOMJS != null) {
+            var src = serviceURL + "/CustomJS/" + option.CUSTOMJS;
+            if (viewModel.loadedCustomJS.indexOf(src) >= 0) {
+                continueBindChart(option, item, divCanvas);
+            }
+            else {
+                var d = new Date();
+                $.getScript(src + "?ver=" + d.getTime().toString(), function () {   //加载test.js,成功后，并执行回调函数  
+                    viewModel.loadedCustomJS.push(src);
+                    continueBindChart(option, item, divCanvas);
+                });
+            }
+
+            return;
+        }
 
 
         if (option.chartType == "pie") {
@@ -470,7 +488,45 @@
         else {
             $(itemInfo.htmlItem).appendTo(divCanvas).dxChart(option);
         }
-        
+
+        var divItem = $("#item" + item.ITEMID);
+        divItem.css("top", itemInfo.posY).css("left", itemInfo.posX).css("width", itemInfo.w).css("height", itemInfo.h);
+
+        if (option.commonPaneSettings != null) {
+            var bgColor = option.commonPaneSettings.backgroundColor;
+            if (bgColor != null) {
+                divItem.css("background-color", bgColor);
+            }
+        }
+    }
+
+    function continueBindChart(option, item, divCanvas) {
+        var itemInfo = item.itemInfo;
+
+        if (option.argumentAxis.label.CUSTOMTEXT != null) {
+            option.argumentAxis.label.customizeText = function (e) {
+                var objectName = "CustomJSObject_" + option.argumentAxis.label.CUSTOMTEXT;
+                var object = eval(objectName);
+                return object.Run(e);
+            };
+        }
+
+        if (option.CUSTOMPOINT != null) {
+            option.customizePoint = function (e) {
+                var objectName = "CustomJSObject_" + option.CUSTOMPOINT;
+                var object = eval(objectName);
+                return object.Run(e);
+            };
+        }
+
+        if (option.chartType == "pie") {
+            $(itemInfo.htmlItem).appendTo(divCanvas).dxPieChart(option);
+        }
+
+        else {
+            $(itemInfo.htmlItem).appendTo(divCanvas).dxChart(option);
+        }
+
         var divItem = $("#item" + item.ITEMID);
         divItem.css("top", itemInfo.posY).css("left", itemInfo.posX).css("width", itemInfo.w).css("height", itemInfo.h);
     }
@@ -484,6 +540,18 @@
         }
         option.dataSource = viewModel.NBIDATA[item.ITEMID];
 
+        if (option.columns != null) {
+            for (var i = 0; i < option.columns.length; i++) {
+                var col = option.columns[i];
+                if (col.TEMPLATE != null && col.TEMPLATE != "") {
+                    switch (col.TEMPLATE) {
+                        case "progress": col.cellTemplate = cellTemplateProgress; break;
+                    }
+                }
+            }
+        }
+
+
         $(itemInfo.htmlItem).appendTo(divCanvas);
         var divItem = $("#item" + item.ITEMID);
         divItem.css("top", itemInfo.posY).css("left", itemInfo.posX).css("width", itemInfo.w).css("height", itemInfo.h);
@@ -491,7 +559,7 @@
         var titleHtml = "<div id='" + "title" + item.ITEMID + "'>";
         $(titleHtml).appendTo(divItem);
         var divTitle = $("#title" + item.ITEMID);
-        divTitle.css("text-align", "center").css("width", "100%").css("font-size","28px");
+        divTitle.css("text-align", "center").css("width", "100%").css("font-size", "28px");
         divTitle.text(item.DES1);
         $("<div>").appendTo(divItem).dxDataGrid(option);
 
@@ -548,7 +616,7 @@
         var divItem = $("#item" + item.ITEMID);
         divItem.css("top", itemInfo.posY).css("left", itemInfo.posX).css("width", itemInfo.w).css("height", itemInfo.h);
 
-        $("<table>").attr("id","tb" + item.ITEMID).appendTo(divItem);
+        $("<table>").attr("id", "tb" + item.ITEMID).appendTo(divItem);
         var divTB = $("#tb" + item.ITEMID);
         divTB.css("width", "100%");
 
@@ -611,15 +679,14 @@
 
     function BindCustomJSItem(item, divCanvas) {
         var option = viewModel.ITEMP[item.ITEMID];
-        var src = serviceURL + "/CustomJS/" + option.src;
+        var d = new Date();
+        var src = serviceURL + "/CustomJS/" + option.src + "?ver=" + d.getTime().toString();
 
         $.getScript(src, function () {   //加载test.js,成功后，并执行回调函数  
             var object = "CustomJSObject_" + option.object + ".Create(viewModel,item, divCanvas)";
             eval(object)
-        });  
+        });
     }
-
-
 
     function AutoUpdateData(item, inteval) {
         var intevalID = viewModel.intevalPool[item];
@@ -629,7 +696,7 @@
         }
 
         if (inteval > 0) {
-            viewModel.intevalPool["item"] = setInterval(function () {
+            viewModel.intevalPool[item] = setInterval(function () {
                 BindItemData(item);
             }, inteval * 1000);
         }
@@ -653,20 +720,52 @@
             success: function (data, textStatus) {
                 viewModel.NBIDATA[itemid] = data;
                 BindItem(itemid);
+                if (debugMode) {
+                    var debugMsg = itemid + "  " + data.length.toString() + "  " + new Date(+new Date() + 8 * 3600 * 1000).toISOString();
+                    console.log(debugMsg);
+                }
+
             },
             error: function (xmlHttpRequest, textStatus, errorThrown) {
-                ServerError(xmlHttpRequest.responseText);
+                ServerError(itemid+": "+xmlHttpRequest.responseText);
             }
         });
     }
 
     function StartCRS() {
+        for (var key in viewModel.intevalPool) {
+            var intevalID = viewModel.intevalPool[key];
+            delete viewModel.intevalPool[key];
+            clearInterval(intevalID);
+        }
+
         var crs = viewModel.crsPool.shift();
         viewModel.nbifunc = crs.FUNCID;
         LoadNBIInfo();
         viewModel.crsPool.push(crs);
         setTimeout(StartCRS, crs.DSPTIME * 1000);
     }
+
+    var cellTemplateProgress = function (container, options) {
+        $("<div/>").dxBullet({
+            target: 100,
+            value: options.value * 100,
+            size: {
+                width: "100%"
+            },
+            tooltip: {
+                enabled: true,
+                font: {
+                    size: 18
+                },
+                paddingTopBottom: 2,
+                customizeTooltip: function () {
+                    return { text: (options.value * 100).toString() + "%" };
+                },
+                zIndex: 99
+            }
+        }).appendTo(container);
+    };
 
     return viewModel;
 };

@@ -153,7 +153,7 @@
         var $divTab = $("#divTab");
         var $divBlock = $("#divBlock");
         $divButton.empty();
-        $divTab.empty();
+        //$divTab.empty();
         $divBlock.empty();
         var dataTabs = [];
 
@@ -236,7 +236,7 @@
                 $("<div>")
                     .append($("<img>", { "src": "data:image;base64," + fieldValue, "class": "FormSizedImg", "id": feID }))
                     .appendTo($fv);
-                $fv.append("<div id='itp" + feID + "'>");
+                $fv.append("<div id='itp" + feID + "' style='margin-top:5px'>");
 
                 if (readonly == false) {
                     var itp = $("#itp" + feID);
@@ -288,7 +288,7 @@
                 createMainControl(feID, $fv, field, editorOption);
 
                 if (field.CTRLTYPE == "914") {
-                    $fv.append("<div id='itp" + feID + "'>");
+                    $fv.append("<div id='itp" + feID + "' style='margin-top:5px'>");
                     var itp = $("#itp" + feID);
                     if (readonly == false) {
                         var obu = {
@@ -310,7 +310,7 @@
                             FileOpen(this);
                         }
                     }
-                    $("<div style='margin-left:10px'>").appendTo(itp).dxButton(obc);
+                    $("<div style='margin-right:5px'>").appendTo(itp).dxButton(obc);
                 }
             }
         }

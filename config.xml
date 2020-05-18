@@ -1,8 +1,8 @@
-﻿<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.smmp.client" version="1.2.6" versionCode="">
+﻿<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.smmp.client" version="2.0.0" versionCode="">
   <name>BPM</name>
   <description>SMMP BPM</description>
   <author email="ITservice@smmpwt.com.cn" href="http://http://www.smmpwt.com.cn/">ITservice</author>
-  <preference name="phonegap-version" value="cli-8.0.0" />
+  <preference name="phonegap-version" value="cli-9.0.0" />
   <preference name="permissions" value="none" />
   <preference name="SplashScreen" value="splash" />
   <preference name="SplashScreenDelay" value="60000" />
@@ -11,7 +11,7 @@
   <preference name="orientation" value="default" />
   <preference name="DisallowOverscroll" value="true" />
   <preference name="StatusBarOverlaysWebView" value="true" />
-  <preference name="StatusBarBackgroundColor" value="#00243E" />
+  <preference name="StatusBarBackgroundColor" value="" />
 
   <access origin="*" />
   <!--<plugin spec="http://github.com/don/cordova-filechooser.git" source="git" />-->
@@ -20,6 +20,7 @@
   <plugin name="cordova-plugin-ios-longpress-fix" />
   <plugin name="cordova-plugin-statusbar" onload="true" />
   <plugin name="cordova-plugin-camera" spec="~4.0.3" />
+  <plugin name="cordova-plugin-device" spec="~1.1.4" />
   <plugin name="phonegap-plugin-barcodescanner" />  
   <plugin name="jpush-phonegap-plugin">
     <param name="APP_KEY" value="7e99acf0597033d0d2407f8a" />
@@ -77,7 +78,9 @@
     <icon src="res/icon/android/xhdpi.png" platform="android" qualifier="xhdpi" />
     <icon src="res/icon/android/xxhdpi.png" platform="android" qualifier="xxhdpi" />
     <preference name="android-windowSoftInputMode" value="adjustResize" />
-    <!--<plugin name="InAppBrowser" value="org.apache.cordova.InAppBrowser" />-->
+    <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
+      <application android:usesCleartextTraffic="true" />
+  </edit-config>
   </platform>
 
   <allow-navigation href="*" />

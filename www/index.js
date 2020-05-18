@@ -5,15 +5,12 @@ var asapmentMenuData;
 
 $(function () {
     var startView = "Login"; 
-    var start = ""; //"NBIDEBUG";
-    
+    var start = "";//"NBI";//"NBIDEBUG";
 
     DevExpress.devices.current({ platform: "generic" });
+    BindTheme();
 
     $(document).on("deviceready", function () {
-        
-        StatusBar.backgroundColorByHexString("#4a7087");
-
         navigator.splashscreen.hide();
         if (window.devextremeaddon) {
             window.devextremeaddon.setup();
@@ -36,7 +33,35 @@ $(function () {
             window.open = cordova.InAppBrowser.open;
         }
         catch (e) { }
+
+
     });
+
+    function BindTheme() {
+        var dark = window.matchMedia('(prefers-color-scheme:dark)').matches;
+        //dark = true;
+        if (dark) {
+            DevExpress.ui.themes.current('generic.dark');
+        }
+        else {
+            DevExpress.ui.themes.current('generic.light');
+        }
+    }
+
+    function AppendCSS(head, css) {
+        var link = document.createElement('link');
+        link.href = css;
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        head.appendChild(link);
+    }
+
+    function AppendJS(head, src) {
+        var link = document.createElement('script');
+        link.src = src;
+        link.type = 'text/javascript';
+        head.appendChild(link);
+    }
 
     function GetRegistrationID() {
         window.JPush.getRegistrationID(function (rid) {
@@ -91,7 +116,7 @@ $(function () {
 
         SysMsg = engMsg;
     }
-    Mobile.app.router.register(":view/:id", { view: startView, id: appVer });
+    Mobile.app.router.register(":view", { view: startView});
     Mobile.app.on("navigatingBack", onNavigatingBack);
     Mobile.app.on("viewShown", function (e) {
         var viewModel = e.viewInfo.model;
@@ -122,7 +147,7 @@ $(function () {
         var func = GetQueryVariable("func");
         var crs = GetQueryVariable("crs");
 
-        var view = "NBI?func=" + func;
+        var view = "NBI?appver=" + appVer + "&func=" + func;
         if (crs=="1") {
             view = view + "&crs=1";
         }
@@ -130,7 +155,8 @@ $(function () {
         Mobile.app.navigate(view, { root: true });
     }
     else if (start == "NBIDEBUG") {
-        Mobile.app.navigate("NBI?func=BI_MFGGAUGE", { root: true });
+        //Mobile.app.navigate("NBI?func=BI_CRS1&crs=1", { root: true });
+        Mobile.app.navigate("NBI?func=BI_MFG2_1", { root: true });
     }
     else {
         Mobile.app.navigate();

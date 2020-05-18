@@ -1,4 +1,4 @@
-<div data-options="dxView : { name: 'FormEdit', title: '' } ">
+﻿<div data-options="dxView : { name: 'FormEdit', title: '' } ">
   <div data-options="dxContent : { targetPlaceholder: 'content' } " class="AsapmentView">
     <div id="loadIndicator" class="indicator" data-bind="dxLoadIndicator: { visible: indicatorVisible }"></div>
     <div id="mainBar" data-bind="dxToolbar: toolBarOption"></div>
