@@ -8,7 +8,7 @@ $(function () {
     var start = "";//"NBI";//"NBIDEBUG";
 
     DevExpress.devices.current({ platform: "generic" });
-    //BindTheme();
+    BindTheme();
 
     $(document).on("deviceready", function () {
         navigator.splashscreen.hide();
@@ -39,28 +39,13 @@ $(function () {
 
     function BindTheme() {
         var dark = window.matchMedia('(prefers-color-scheme:dark)').matches;
-        //dark = true;
+        dark = true;
         if (dark) {
             DevExpress.ui.themes.current('generic.dark');
         }
         else {
             DevExpress.ui.themes.current('generic.light');
         }
-    }
-
-    function AppendCSS(head, css) {
-        var link = document.createElement('link');
-        link.href = css;
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        head.appendChild(link);
-    }
-
-    function AppendJS(head, src) {
-        var link = document.createElement('script');
-        link.src = src;
-        link.type = 'text/javascript';
-        head.appendChild(link);
     }
 
     function GetRegistrationID() {
