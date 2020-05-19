@@ -15,12 +15,12 @@ $(function () {
         if (window.devextremeaddon) {
             window.devextremeaddon.setup();
         }
-        //$(document).on("backbutton", function () {
-        //    DevExpress.processHardwareBackButton();
-        //});
+        $(document).on("backbutton", function () {
+            DevExpress.processHardwareBackButton();
+        });
 
-        //var uuid = device.uuid;
-        //deviceid = uuid;
+        var uuid = device.uuid;
+        deviceid = uuid;
 
         //window.JPush.init();
         //window.setTimeout(GetRegistrationID, 1000);
