@@ -11,10 +11,10 @@ $(function () {
     BindTheme();
 
     $(document).on("deviceready", function () {
-        //navigator.splashscreen.hide();
-        //if (window.devextremeaddon) {
-        //    window.devextremeaddon.setup();
-        //}
+        navigator.splashscreen.hide();
+        if (window.devextremeaddon) {
+            window.devextremeaddon.setup();
+        }
         //$(document).on("backbutton", function () {
         //    DevExpress.processHardwareBackButton();
         //});
