@@ -22,17 +22,17 @@ $(function () {
         var uuid = device.uuid;
         deviceid = uuid;
 
-        //window.JPush.init();
-        //window.setTimeout(GetRegistrationID, 1000);
+        window.JPush.init();
+        window.setTimeout(GetRegistrationID, 1000);
 
-        //if (device.platform != "Android") {
-        //    window.JPush.setApplicationIconBadgeNumber(0);
-        //}
+        if (device.platform != "Android") {
+            window.JPush.setApplicationIconBadgeNumber(0);
+        }
 
-        //try {
-        //    window.open = cordova.InAppBrowser.open;
-        //}
-        //catch (e) { }
+        try {
+            window.open = cordova.InAppBrowser.open;
+        }
+        catch (e) { }
 
 
     });

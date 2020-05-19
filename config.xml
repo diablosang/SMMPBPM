@@ -3,7 +3,7 @@
 	xmlns:gap="http://phonegap.com/ns/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:cdv="http://cordova.apache.org/ns/1.0"
-	id="com.smmp.client" version="2.0.16" versionCode="">
+	id="com.smmp.client" version="2.0.17" versionCode="">
 	<name>BPM</name>
 	<description>SMMP BPM</description>
 	<author email="ITservice@smmpwt.com.cn" href="http://http://www.smmpwt.com.cn/">ITservice</author>
@@ -22,22 +22,22 @@
 	<preference name="orientation" value="default" />
 	<preference name="DisallowOverscroll" value="true" />
 	<preference name="StatusBarOverlaysWebView" value="true" />
-	<preference name="StatusBarBackgroundColor" value="" />
+	<!--<preference name="StatusBarBackgroundColor" value="#000000" />-->
 
 	<access origin="*" />
 	<!--<plugin spec="http://github.com/don/cordova-filechooser.git" source="git" />-->
 	<plugin name="cordova-plugin-splashscreen"/>
 	<plugin name="cordova-plugin-whitelist" />
 	<plugin name="cordova-plugin-ios-longpress-fix" />
-	<!--<plugin name="cordova-plugin-statusbar" />-->
+	<plugin name="cordova-plugin-statusbar" />
 	<plugin name="cordova-plugin-camera"  />
 	<plugin name="cordova-plugin-device" />
 	<plugin name="phonegap-plugin-barcodescanner" />
-	<!--<plugin name="jpush-phonegap-plugin">
+	<plugin name="jpush-phonegap-plugin">
 		<param name="APP_KEY" value="7e99acf0597033d0d2407f8a" />
 	</plugin>
 	<plugin name="cordova-plugin-app-version" />
-	<plugin name="cordova-plugin-inappbrowser"  />-->
+	<plugin name="cordova-plugin-inappbrowser"  />
 
 	<icon src="res/icon/icon.png" />
 	<platform name="ios">
