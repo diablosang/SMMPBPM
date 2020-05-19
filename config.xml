@@ -3,7 +3,7 @@
 	xmlns:gap="http://phonegap.com/ns/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:cdv="http://cordova.apache.org/ns/1.0"
-	id="com.smmp.client" version="2.0.17" versionCode="">
+	id="com.smmp.client" version="2.0.18" versionCode="">
 	<name>BPM</name>
 	<description>SMMP BPM</description>
 	<author email="ITservice@smmpwt.com.cn" href="http://http://www.smmpwt.com.cn/">ITservice</author>
@@ -15,14 +15,14 @@
 	<preference name="FadeSplashScreenDuration" value="300" />
 	<preference name="SplashShowOnlyFirstTime" value="false" />
 	<preference name="SplashScreen" value="screen" />
-	<preference name="SplashScreenDelay" value="20000" />
+	<preference name="SplashScreenDelay" value="10000" />
 	<preference name="AutoHideSplashScreen" value="false" />
 
 
 	<preference name="orientation" value="default" />
 	<preference name="DisallowOverscroll" value="true" />
 	<preference name="StatusBarOverlaysWebView" value="true" />
-	<!--<preference name="StatusBarBackgroundColor" value="#000000" />-->
+	<preference name="StatusBarBackgroundColor" value="#000000" />
 
 	<access origin="*" />
 	<!--<plugin spec="http://github.com/don/cordova-filechooser.git" source="git" />-->
