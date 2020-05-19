@@ -3,16 +3,22 @@
 	xmlns:gap="http://phonegap.com/ns/1.0" 
 	xmlns:android="http://schemas.android.com/apk/res/android" 
 	xmlns:cdv="http://cordova.apache.org/ns/1.0"	
-	id="com.smmp.client" version="2.0.6" versionCode="">
+	id="com.smmp.client" version="2.0.7" versionCode="">
   <name>BPM</name>
   <description>SMMP BPM</description>
   <author email="ITservice@smmpwt.com.cn" href="http://http://www.smmpwt.com.cn/">ITservice</author>
   <preference name="phonegap-version" value="cli-9.0.0" />
   <preference name="permissions" value="none" />
-  <preference name="SplashScreen" value="splash" />
-  <preference name="SplashScreenDelay" value="60000" />
-  <preference name="AutoHideSplashScreen" value="false" />
-  
+	
+	<preference name="SplashMaintainAspectRatio" value="true" />
+	<preference name="FadeSplashScreen" value="true" />
+	<preference name="FadeSplashScreenDuration" value="300" />
+	<preference name="SplashShowOnlyFirstTime" value="false" />
+	<preference name="SplashScreen" value="screen" />
+	<preference name="SplashScreenDelay" value="20000" />
+	<preference name="AutoHideSplashScreen" value="false" />
+	
+	
   <preference name="orientation" value="default" />
   <preference name="DisallowOverscroll" value="true" />
   <preference name="StatusBarOverlaysWebView" value="true" />
@@ -21,17 +27,17 @@
   <access origin="*" />
   <!--<plugin spec="http://github.com/don/cordova-filechooser.git" source="git" />-->
   <plugin name="cordova-plugin-whitelist" />
-  <plugin name="cordova-plugin-splashscreen" onload="true" version="3.2.2"/>
+  <plugin name="cordova-plugin-splashscreen"/>
   <plugin name="cordova-plugin-ios-longpress-fix" />
   <plugin name="cordova-plugin-statusbar" onload="true" />
-  <plugin name="cordova-plugin-camera" spec="~4.0.3" />
-  <plugin name="cordova-plugin-device" spec="~1.1.4" />
+  <plugin name="cordova-plugin-camera"  />
+  <plugin name="cordova-plugin-device" />
   <plugin name="phonegap-plugin-barcodescanner" />  
   <plugin name="jpush-phonegap-plugin">
     <param name="APP_KEY" value="7e99acf0597033d0d2407f8a" />
   </plugin>
   <plugin name="cordova-plugin-app-version" />
-  <plugin name="cordova-plugin-inappbrowser" spec="~3.0.0" />
+  <plugin name="cordova-plugin-inappbrowser"  />
   
   <icon src="res/icon/icon.png" />
   <platform name="ios">
@@ -57,7 +63,15 @@
     <icon src="res/icon/ios/icon-40.png" platform="ios" width="40" height="40" />
     <icon src="res/icon/ios/icon-40@2x.png" platform="ios" width="80" height="80" />
     <icon src="res/icon/ios/icon-40@3x.png" platform="ios" width="120" height="120" />
-    
+
+
+	  <splash src="res/screen/ios/Default@2x~universal~anyany.png" />
+	  <!--<splash src="res/screen/ios/Default@2x~universal~comany.png" />
+	  <splash src="res/screen/ios/Default@2x~universal~comcom.png" />
+	  <splash src="res/screen/ios/Default@3x~universal~anyany.png" />
+	  <splash src="res/screen/ios/Default@3x~universal~anycom.png" />
+	  <splash src="res/screen/ios/Default@3x~universal~comany.png" />-->
+	  
     <preference name="prerendered-icon" value="false" />
     <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
       <string>APP将通过摄像头扫描二维码，以及让用户拍摄照片上传</string>
@@ -82,6 +96,17 @@
     <icon src="res/icon/android/hdpi.png" platform="android" qualifier="hdpi" />
     <icon src="res/icon/android/xhdpi.png" platform="android" qualifier="xhdpi" />
     <icon src="res/icon/android/xxhdpi.png" platform="android" qualifier="xxhdpi" />
+
+	  <splash src="res/screen/android/splash-land-hdpi.png" density="land-hdpi"/>
+	  <splash src="res/screen/android/splash-land-xhdpi.png" density="land-xhdpi"/>
+	  <splash src="res/screen/android/splash-land-xxhdpi.png" density="land-xxhdpi"/>
+
+	  <splash src="res/screen/android/splash-port-hdpi.png" density="port-hdpi"/>
+	  <splash src="res/screen/android/splash-port-ldpi.png" density="port-ldpi"/>
+	  <splash src="res/screen/android/splash-port-mdpi.png" density="port-mdpi"/>
+	  <splash src="res/screen/android/splash-port-xhdpi.png" density="port-xhdpi"/>
+	  <splash src="res/screen/android/splash-port-xxhdpi.png" density="port-xxhdpi"/>
+	  
     <preference name="android-windowSoftInputMode" value="adjustResize" />
     <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
       <application android:usesCleartextTraffic="true" />
