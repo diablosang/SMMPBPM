@@ -19,8 +19,8 @@ $(function () {
             DevExpress.processHardwareBackButton();
         });
 
-        var uuid = device.uuid;
-        deviceid = uuid;
+        //var uuid = device.uuid;
+        //deviceid = uuid;
 
         //window.JPush.init();
         //window.setTimeout(GetRegistrationID, 1000);
