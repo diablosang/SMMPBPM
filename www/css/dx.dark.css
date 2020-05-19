@@ -1247,8 +1247,8 @@
   float: none;
 }
 .dx-theme-generic-typography {
-    background-color: #2a2a2a;
-    /*background-image: url("images/logon2.jpg");*/
+    /*background-color: #2a2a2a;*/
+    background-image: url("../images/logon2.jpg");
     background-position: center;
     background-size: cover;
     color: #dedede;
