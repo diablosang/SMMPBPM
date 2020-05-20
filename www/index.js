@@ -38,10 +38,6 @@ $(function () {
     });
 
     function BindTheme() {
-        if (DevExpress.devices.real().platform == 'android' | 'ios') {
-            StatusBar.backgroundColorByHexString("#000000");
-        }
-        
         var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         if (dark) {
             DevExpress.ui.themes.current('generic.dark');
