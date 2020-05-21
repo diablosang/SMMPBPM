@@ -38,8 +38,7 @@ $(function () {
     });
 
     function BindTheme() {
-        var dark = window.matchMedia('(prefers-color-scheme: dark)');
-        alert(JSON.stringify(dark));
+        var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         //dark = true;
         if (dark) {
             DevExpress.ui.themes.current('generic.dark');
