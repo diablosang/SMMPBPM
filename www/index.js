@@ -38,7 +38,7 @@ $(function () {
     });
 
     function BindTheme() {
-        var dark = cordova.plugins.ThemeDetection.isDarkModeEnabled();//window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var dark = window.matchMedia('(prefers-color-scheme: dark)');
         //dark = true;
         if (dark) {
             DevExpress.ui.themes.current('generic.dark');

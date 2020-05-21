@@ -33,7 +33,7 @@
 	<plugin name="cordova-plugin-statusbar" />
 	<plugin name="cordova-plugin-camera"  />
 	<plugin name="cordova-plugin-device" />
-	<plugin name="cordova-plugin-theme-detection" />
+	<!--<plugin name="cordova-plugin-theme-detection" />-->
 	<plugin name="phonegap-plugin-barcodescanner" />
 	<plugin name="jpush-phonegap-plugin">
 		<param name="APP_KEY" value="7e99acf0597033d0d2407f8a" />
