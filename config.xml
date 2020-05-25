@@ -26,7 +26,7 @@
 	<preference name="StatusBarCropsWebview" value="false" />
 
 	<preference name="UseLegacySwiftLanguageVersion" value="true" />
-	<preference name="UseSwiftLanguageVersion" value="5" />
+	<preference name="UseSwiftLanguageVersion" value="4.2" />
 	
 	<access origin="*" />
 	<!--<plugin spec="http://github.com/don/cordova-filechooser.git" source="git" />-->
