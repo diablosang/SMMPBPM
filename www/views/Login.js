@@ -6,6 +6,8 @@
         versionChecked: ko.observable(false),
         indicatorVisible: ko.observable(false),
         viewShown: function () {
+            $("#debugInfo").text(navigator.userAgent);
+
             SetLanguage();
             var w = $("#inputBox1").width();
             $(".LG_TextBox").width(w - 33);
