@@ -6,8 +6,19 @@
         versionChecked: ko.observable(false),
         indicatorVisible: ko.observable(false),
         viewShown: function () {
-            var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            $("#debugInfo").text(dark + ", " + navigator.userAgent);
+            cordova.plugins.osTheme.getTheme()
+                .then(theme => { // { isDark: [boolean] }
+                    $("#debugInfo").text(theme.isDark);
+                    if (theme.isDark) {
+                        DevExpress.ui.themes.current('generic.dark');
+                    }
+                    else {
+                        DevExpress.ui.themes.current('generic.light');
+                    }
+                })
+                .catch(message => { // string error message
+                    $("#debugInfo").text('Error getting theme: ' + message)
+                });
 
             SetLanguage();
             var w = $("#inputBox1").width();
