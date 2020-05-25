@@ -24,6 +24,9 @@
 	<preference name="StatusBarOverlaysWebView" value="true" />
 	<preference name="StatusBarBackgroundColor" value="#2E2E2E" />
 	<preference name="StatusBarCropsWebview" value="false" />
+
+	<preference name="UseLegacySwiftLanguageVersion" value="true" />
+	<preference name="UseSwiftLanguageVersion" value="5" />
 	
 	<access origin="*" />
 	<!--<plugin spec="http://github.com/don/cordova-filechooser.git" source="git" />-->
@@ -33,6 +36,7 @@
 	<plugin name="cordova-plugin-statusbar" />
 	<plugin name="cordova-plugin-camera"  />
 	<plugin name="cordova-plugin-device" />
+	<plugin name="cordova-plugin-add-swift-support" />
 	<plugin name="cordova-plugin-os-theme" />
 	
 	<!--<plugin name="cordova-plugin-theme-detection" />-->
