@@ -6,7 +6,8 @@
         versionChecked: ko.observable(false),
         indicatorVisible: ko.observable(false),
         viewShown: function () {
-            $("#debugInfo").text(navigator.userAgent);
+            var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            $("#debugInfo").text(dark + ", " + navigator.userAgent);
 
             SetLanguage();
             var w = $("#inputBox1").width();
