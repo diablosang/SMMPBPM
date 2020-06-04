@@ -113,11 +113,6 @@
 		<edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
 			<application android:usesCleartextTraffic="true" />
 		</edit-config>
-		<config-file target="AndroidManifest.xml" parent="/*" mode="merge">
-			<uses-permission android:name="android.permission.CAMERA" />
-			<uses-feature android:name="android.hardware.camera" />
-			<uses-feature android:name="android.hardware.camera.autofocus" />
-		</config-file>
 	</platform>
 
 	<allow-navigation href="*" />
