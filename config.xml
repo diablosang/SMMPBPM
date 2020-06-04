@@ -111,7 +111,7 @@
 
 		<preference name="android-windowSoftInputMode" value="adjustResize" />
 		<edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
-			<application android:usesCleartextTraffic="true" />
+		  <application android:usesCleartextTraffic="true" />
 		</edit-config>
 	</platform>
 
