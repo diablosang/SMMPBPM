@@ -3,7 +3,7 @@
 	xmlns:gap="http://phonegap.com/ns/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:cdv="http://cordova.apache.org/ns/1.0"
-	id="com.smmp.client" version="2.0.26" versionCode="">
+	id="com.SMMP.client" version="2.0.28" versionCode="">
 	<name>BPM</name>
 	<description>SMMP BPM</description>
 	<author email="ITservice@smmpwt.com.cn" href="http://http://www.smmpwt.com.cn/">ITservice</author>
@@ -25,9 +25,6 @@
 	<preference name="StatusBarBackgroundColor" value="#2E2E2E" />
 	<preference name="StatusBarCropsWebview" value="false" />
 
-	<preference name="UseLegacySwiftLanguageVersion" value="true" />
-	<preference name="UseSwiftLanguageVersion" value="4.2" />
-	
 	<access origin="*" />
 	<!--<plugin spec="http://github.com/don/cordova-filechooser.git" source="git" />-->
 	<plugin name="cordova-plugin-splashscreen"/>
@@ -36,13 +33,11 @@
 	<plugin name="cordova-plugin-statusbar" />
 	<plugin name="cordova-plugin-camera"  />
 	<plugin name="cordova-plugin-device" />
-	<plugin name="cordova-plugin-add-swift-support" />
-	<plugin name="cordova-plugin-os-theme" />
-	
-	<!--<plugin name="cordova-plugin-theme-detection" />-->
-	<plugin name="phonegap-plugin-barcodescanner" />
+	<!--<plugin name="phonegap-plugin-barcodescanner" />-->
+	<plugin name="cordova-plugin-barcodescanner" />
 	<plugin name="jpush-phonegap-plugin">
 		<param name="APP_KEY" value="7e99acf0597033d0d2407f8a" />
+		<variable name="APP_KEY" value="7e99acf0597033d0d2407f8a" />
 	</plugin>
 	<plugin name="cordova-plugin-app-version" />
 	<plugin name="cordova-plugin-inappbrowser"  />
@@ -81,22 +76,21 @@
 	  <splash src="res/screen/ios/Default@3x~universal~comany.png" />-->
 
 		<preference name="prerendered-icon" value="false" />
-		<edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
+		<config-file overwrite="true" parent="NSCameraUsageDescription" platform="ios" target="*-Info.plist">
 			<string>APP将通过摄像头扫描二维码，以及让用户拍摄照片上传</string>
-		</edit-config>
-		<edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
+		</config-file>
+		<config-file overwrite="true" parent="NSPhotoLibraryUsageDescription" platform="ios" target="*-Info.plist">
 			<string>APP将让用户选择照片上传系统</string>
-		</edit-config>
-		<edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
+		</config-file>
+		<config-file overwrite="true" parent="NSPhotoLibraryAddUsageDescription" platform="ios" target="*-Info.plist">
 			<string>APP将让用户选择照片上传系统</string>
-		</edit-config>
-		<edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
+		</config-file>
+		<config-file overwrite="true" parent="NSLocationAlwaysUsageDescription" platform="ios" target="*-Info.plist">
 			<string>APP将获取用户的当前地理位置</string>
-		</edit-config>
-		<edit-config target="CFBundleIdentifier" file="*-Info.plist" mode="merge">
-			<string>com.smmp.client</string>
-		</edit-config>
-		<!--<plugin name="InAppBrowser" value="CDVInAppBrowser" />-->
+		</config-file>
+		<config-file overwrite="true" parent="CFBundleIdentifier" platform="ios" target="*-Info.plist">
+			<string>com.SMMP.client</string>
+		</config-file>
 	</platform>
 	<platform name="android">
 		<icon src="res/icon/android/ldpi.png" platform="android" qualifier="ldpi" />
@@ -119,6 +113,11 @@
 		<edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
 			<application android:usesCleartextTraffic="true" />
 		</edit-config>
+		<config-file target="AndroidManifest.xml" parent="/*" mode="merge">
+			<uses-permission android:name="android.permission.CAMERA" />
+			<uses-feature android:name="android.hardware.camera" />
+			<uses-feature android:name="android.hardware.camera.autofocus" />
+		</config-file>
 	</platform>
 
 	<allow-navigation href="*" />

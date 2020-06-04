@@ -64,10 +64,10 @@
              }
 
              var url = result.text;
-             viewModel.serviceURL(url);
+             viewModel.url(url);
              var localStorage = window.localStorage;
-             localStorage.setItem("serviceurl", this.serviceURL());
-             serviceURL = this.serviceURL();
+             localStorage.setItem("serviceurl", url);
+             serviceURL = url;
              DevExpress.ui.notify(SysMsg.saveFailed, "success", 1000);
          },
          function (error) {

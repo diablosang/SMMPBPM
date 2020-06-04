@@ -38,20 +38,6 @@ $(function () {
     });
 
     function BindTheme() {
-        cordova.plugins.osTheme.getTheme()
-            .then(theme => { // { isDark: [boolean] }
-                if (theme.isDark) {
-                    DevExpress.ui.themes.current('generic.dark');
-                }
-                else {
-                    DevExpress.ui.themes.current('generic.light');
-                }
-            })
-            .catch(message => { // string error message
-                console.log('Error getting theme: ' + message)
-            }
-        );
-
         var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         //dark = true;
         if (dark) {

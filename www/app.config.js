@@ -1,9 +1,9 @@
-var appVer = "2.0.26";
+var appVer = "2.0.28";
 var nullDeviceType = "PC";
 var asUserList = [];
 var pushChn = "";
 var deviceid = "";
-var serviceURL = "http://localhost:61862";
+var serviceURL = "http://180.166.252.90:20191/WebAPITest";
 var debugMode = true;
 var serverVer = "";
 
