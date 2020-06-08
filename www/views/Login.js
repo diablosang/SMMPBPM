@@ -5,21 +5,7 @@
         title: ko.observable(""),
         versionChecked: ko.observable(false),
         indicatorVisible: ko.observable(false),
-        viewShown: function () {
-            cordova.plugins.osTheme.getTheme()
-                .then(theme => { // { isDark: [boolean] }
-                    $("#debugInfo").text(theme.isDark);
-                    if (theme.isDark) {
-                        DevExpress.ui.themes.current('generic.dark');
-                    }
-                    else {
-                        DevExpress.ui.themes.current('generic.light');
-                    }
-                })
-                .catch(message => { // string error message
-                    $("#debugInfo").text('Error getting theme: ' + message)
-                });
-
+        viewShown: function () {           
             SetLanguage();
             var w = $("#inputBox1").width();
             $(".LG_TextBox").width(w - 33);
