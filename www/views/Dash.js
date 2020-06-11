@@ -36,7 +36,6 @@
             grouped: false,
             collapsibleGroups: false,
             scrollingEnabled: false,
-
             onItemClick: function (e) {
                 var data = e.itemData;
                 var func = data.FUNCID;
@@ -61,9 +60,13 @@
                 OpenDoc(func, group, doc);
             }
         },
-        onScrollViewPullingDown: function (e) {
-            BindData(this);
-            e.component.release();
+        scrollOptions: {
+            useNative: false,
+            showScrollbar: 'never',
+            onPullDown: function (e) {
+                BindData(this);
+                e.component.release();
+            }
         },
         galleryOptions: {
             showIndicator:false,
