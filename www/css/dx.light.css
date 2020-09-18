@@ -13576,6 +13576,12 @@
     background-color: #EFEFEFAF;
 }
 
+.GridPopup {
+    width: 100%;
+    height: 100%;
+    background-color: #EFEFEFAF;
+}
+
 .ItemList-ScrollView {
     position: absolute;
     top: 0;
