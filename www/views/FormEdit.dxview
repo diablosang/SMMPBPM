@@ -27,7 +27,7 @@
       </div>
     </div>
     <div id="popWFHist" data-bind="dxPopup: popWFHistOption">
-      <div id="gridWFHist" data-bind="dxDataGrid: gridWFHistOption" style="width:100%;height:100%"></div>
+      <div id="gridWFHist" data-bind="dxDataGrid: gridWFHistOption" class="GridPopup"></div>
     </div>
   </div>
 </div>
