@@ -98,7 +98,7 @@
 		<icon src="res/icon/android/hdpi.png" platform="android" qualifier="hdpi" />
 		<icon src="res/icon/android/xhdpi.png" platform="android" qualifier="xhdpi" />
 		<icon src="res/icon/android/xxhdpi.png" platform="android" qualifier="xxhdpi" />
-
+ 		<icon src="res/icon/android/xxxhdpi.png" platform="android" qualifier="xxxhdpi" />
 		<splash src="res/screen/android/splash-land-hdpi.png" density="land-hdpi"/>
 		<splash src="res/screen/android/splash-land-xhdpi.png" density="land-xhdpi"/>
 		<splash src="res/screen/android/splash-land-xxhdpi.png" density="land-xxhdpi"/>
